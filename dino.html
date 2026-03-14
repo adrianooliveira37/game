@@ -1,57 +1,83 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Meta do Motorista</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
+
 body{
 background: linear-gradient(135deg,#020617,#0f172a,#1e293b);
 }
+
 .glass{
 background: rgba(255,255,255,0.08);
-backdrop-filter: blur(16px);
+backdrop-filter: blur(18px);
 border:1px solid rgba(255,255,255,0.15);
 }
+
 .input{
 background: rgba(255,255,255,0.08);
 border:1px solid rgba(255,255,255,0.15);
 color:white;
+width:100%;
 }
+
 </style>
 
 </head>
 
-<body class="text-white min-h-screen flex items-center justify-center p-6">
+<body class="text-white min-h-screen flex items-center justify-center p-4">
 
-<div class="glass w-full max-w-xl p-8 rounded-3xl shadow-2xl">
+<div class="glass w-full max-w-md p-6 rounded-3xl shadow-2xl">
 
-<h1 class="text-3xl font-bold text-center mb-6">
+<h1 class="text-2xl font-bold text-center mb-6">
 Meta do Motorista
 </h1>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
-<input id="meta" placeholder="Meta de lucro" class="input p-2 rounded-lg">
-<input id="valorKm" placeholder="Valor por km" class="input p-2 rounded-lg">
-<input id="gasolina" placeholder="Preço gasolina" class="input p-2 rounded-lg">
-<input id="consumo" placeholder="Consumo km/L" class="input p-2 rounded-lg">
-<input id="valorHora" placeholder="Valor por hora" class="input p-2 rounded-lg">
-<input id="ganhoAtual" placeholder="Ganho atual hoje" class="input p-2 rounded-lg">
-<input id="inicio" type="time" class="input p-2 rounded-lg">
-<input id="descanso" placeholder="Horas descanso" class="input p-2 rounded-lg">
+<input id="meta" placeholder="Meta de lucro"
+class="input p-3 rounded-lg">
 
-<div class="flex items-center gap-2 md:col-span-2">
+<input id="valorKm" placeholder="Valor por km"
+class="input p-3 rounded-lg">
+
+<input id="gasolina" placeholder="Preço gasolina"
+class="input p-3 rounded-lg">
+
+<input id="consumo" placeholder="Consumo km/L"
+class="input p-3 rounded-lg">
+
+<input id="valorHora" placeholder="Valor por hora"
+class="input p-3 rounded-lg">
+
+<input id="ganhoAtual" placeholder="Ganho atual hoje"
+class="input p-3 rounded-lg">
+
+<div class="sm:col-span-2">
+<label class="text-xs opacity-70">Horário de início</label>
+<input id="inicio" type="time"
+class="input p-3 rounded-lg">
+</div>
+
+<input id="descanso" placeholder="Horas descanso"
+class="input p-3 rounded-lg sm:col-span-2">
+
+<div class="flex items-center gap-2 sm:col-span-2">
 <input id="ar" type="checkbox">
-<label>Ar condicionado ligado (+10% consumo)</label>
+<label class="text-sm">Ar condicionado ligado (+10% consumo)</label>
 </div>
 
 </div>
 
 <button onclick="calcular()"
-class="mt-6 w-full bg-gradient-to-r from-blue-500 to-indigo-600 p-3 rounded-xl font-semibold">
+class="mt-5 w-full bg-gradient-to-r from-blue-500 to-indigo-600 p-3 rounded-xl font-semibold">
 Calcular
 </button>
 
@@ -62,11 +88,11 @@ Ver dicas de condução
 
 <div class="mt-6">
 
-<div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
-<div id="barra" class="bg-green-400 h-4 w-0 transition-all"></div>
+<div class="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
+<div id="barra" class="bg-green-400 h-3 w-0 transition-all"></div>
 </div>
 
-<p id="progressoTexto" class="text-sm mt-2"></p>
+<p id="progressoTexto" class="text-xs mt-2"></p>
 
 </div>
 
@@ -74,11 +100,13 @@ Ver dicas de condução
 
 <!-- POPUP RESULTADO -->
 
-<div id="popup" class="fixed inset-0 bg-black/60 hidden items-center justify-center">
+<div id="popup" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4">
 
-<div class="glass p-6 rounded-2xl w-96">
+<div class="glass p-6 rounded-2xl w-full max-w-sm">
 
-<h2 class="text-xl font-bold mb-3">Resultado</h2>
+<h2 class="text-xl font-bold mb-3">
+Resultado
+</h2>
 
 <div id="resultado" class="space-y-2 text-sm"></div>
 
@@ -91,12 +119,11 @@ Fechar
 
 </div>
 
-
 <!-- POPUP DICAS -->
 
-<div id="dicasPopup" class="fixed inset-0 bg-black/60 hidden items-center justify-center">
+<div id="dicasPopup" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4">
 
-<div class="glass p-6 rounded-xl w-80 text-sm relative">
+<div class="glass p-6 rounded-xl w-full max-w-sm relative">
 
 <button onclick="fecharDicas()"
 class="absolute top-2 right-3 text-xl">
@@ -109,11 +136,11 @@ Dicas de economia
 
 <ul class="space-y-2 text-sm">
 
-<li>🚗 Velocidade ideal urbana: <b>40–60 km/h</b></li>
+<li>🚗 Velocidade urbana ideal: 40–60 km/h</li>
 
 <li>⚡ Evite aceleração brusca</li>
 
-<li>⛽ Mantenha pneus calibrados</li>
+<li>⛽ Pneus sempre calibrados</li>
 
 <li>❄️ Use ar condicionado com moderação</li>
 
@@ -126,7 +153,6 @@ Dicas de economia
 </div>
 
 </div>
-
 
 <script>
 
@@ -271,4 +297,4 @@ carregarCache();
 </script>
 
 </body>
-</html>
+  </html>
