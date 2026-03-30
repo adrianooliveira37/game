@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora de Combustível</title>
+<style>
+    body { font-family: Arial; padding: 20px; }
+    input { padding: 5px; margin: 5px; }
+    table { border-collapse: collapse; margin-top: 15px; }
+    td, th { border: 1px solid #ccc; padding: 10px; text-align: center; }
+</style>
+</head>
+<body>
+
+<h2>Calculadora de Combustível</h2>
+
+<label>Preço do combustível (R$):</label>
+<input type="number" id="preco" value="4.25" step="0.01">
+
+<br>
+
+<label>Valor a abastecer (R$):</label>
+<input type="number" id="valor" value="25" step="0.01">
+
+<br>
+
+<label>Consumo do carro (km/L):</label>
+<input type="number" id="consumo" value="9" step="0.1">
+
+<br><br>
+
+<button onclick="calcular()">Calcular</button>
+
+<table>
+    <tr>
+        <th>Litros abastecidos</th>
+        <th>Km que vai rodar</th>
+    </tr>
+    <tr>
+        <td id="litros">-</td>
+        <td id="km">-</td>
+    </tr>
+</table>
+
+<script>
+function calcular() {
+    let preco = parseFloat(document.getElementById('preco').value);
+    let valor = parseFloat(document.getElementById('valor').value);
+    let consumo = parseFloat(document.getElementById('consumo').value);
+
+    let litros = valor / preco;
+    let km = litros * consumo;
+
+    document.getElementById('litros').innerText = litros.toFixed(2) + " L";
+    document.getElementById('km').innerText = km.toFixed(2) + " km";
+}
+</script>
+
+</body>
+</html>
