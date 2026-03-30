@@ -2,58 +2,115 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora de Combustível</title>
+
 <style>
-    body { font-family: Arial; padding: 20px; }
-    input { padding: 5px; margin: 5px; }
-    table { border-collapse: collapse; margin-top: 15px; }
-    td, th { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    body {
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: #fff;
+        margin: 0;
+        padding: 15px;
+    }
+
+    .container {
+        max-width: 400px;
+        margin: auto;
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-top: 5px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        background: #334155;
+        color: #fff;
+    }
+
+    input:focus {
+        outline: 2px solid #38bdf8;
+    }
+
+    .resultado {
+        margin-top: 20px;
+        padding: 15px;
+        background: #0ea5e9;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .resultado p {
+        margin: 8px 0;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    @media (max-width: 400px) {
+        h2 { font-size: 18px; }
+        .resultado p { font-size: 16px; }
+    }
 </style>
 </head>
+
 <body>
 
-<h2>Calculadora de Combustível</h2>
+<div class="container">
+    <h2>⛽ Calculadora</h2>
 
-<label>Preço do combustível (R$):</label>
-<input type="number" id="preco" value="4.25" step="0.01">
+    <label>Preço do combustível (R$)</label>
+    <input type="number" id="preco" value="4.25" step="0.01">
 
-<br>
+    <label>Valor a abastecer (R$)</label>
+    <input type="number" id="valor" value="25" step="0.01">
 
-<label>Valor a abastecer (R$):</label>
-<input type="number" id="valor" value="25" step="0.01">
+    <label>Consumo do carro (km/L)</label>
+    <input type="number" id="consumo" value="9" step="0.1">
 
-<br>
-
-<label>Consumo do carro (km/L):</label>
-<input type="number" id="consumo" value="9" step="0.1">
-
-<br><br>
-
-<button onclick="calcular()">Calcular</button>
-
-<table>
-    <tr>
-        <th>Litros abastecidos</th>
-        <th>Km que vai rodar</th>
-    </tr>
-    <tr>
-        <td id="litros">-</td>
-        <td id="km">-</td>
-    </tr>
-</table>
+    <div class="resultado">
+        <p id="litros">Litros: -</p>
+        <p id="km">Autonomia: -</p>
+    </div>
+</div>
 
 <script>
 function calcular() {
-    let preco = parseFloat(document.getElementById('preco').value);
-    let valor = parseFloat(document.getElementById('valor').value);
-    let consumo = parseFloat(document.getElementById('consumo').value);
+    let preco = parseFloat(document.getElementById('preco').value) || 0;
+    let valor = parseFloat(document.getElementById('valor').value) || 0;
+    let consumo = parseFloat(document.getElementById('consumo').value) || 0;
 
-    let litros = valor / preco;
-    let km = litros * consumo;
+    if (preco > 0) {
+        let litros = valor / preco;
+        let km = litros * consumo;
 
-    document.getElementById('litros').innerText = litros.toFixed(2) + " L";
-    document.getElementById('km').innerText = km.toFixed(2) + " km";
+        document.getElementById('litros').innerText = "Litros: " + litros.toFixed(2) + " L";
+        document.getElementById('km').innerText = "Autonomia: " + km.toFixed(2) + " km";
+    }
 }
+
+document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('input', calcular);
+});
+
+calcular();
 </script>
 
 </body>
