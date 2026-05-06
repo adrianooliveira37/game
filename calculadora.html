@@ -4,437 +4,196 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculadora IP - Relatório Técnico</title>
+
+  <!-- Tailwind corrigido -->
   <script src="https://cdn.tailwindcss.com"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
     body { font-family: 'Segoe UI', system-ui, sans-serif; }
+
     @media print {
-      body * {
-        visibility: hidden;
-      }
-      #relatorio-impressao, #relatorio-impressao * {
-        visibility: visible;
-      }
+      body * { visibility: hidden; }
+      #relatorio-impressao, #relatorio-impressao * { visibility: visible; }
+
       #relatorio-impressao {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        margin: 0;
         padding: 20px;
       }
-      .no-print {
-        display: none !important;
-      }
-      button, .btn-print-hide {
-        display: none !important;
-      }
+
+      .no-print { display: none !important; }
     }
   </style>
 </head>
+
 <body class="bg-gray-950 text-white min-h-screen">
-  <div class="max-w-5xl mx-auto p-6">
-    <!-- Header -->
-    <div class="text-center mb-8 no-print">
-      <h1 class="text-4xl font-bold mb-2 text-blue-500">
-        📷 Calculadora de Câmeras IP
-      </h1>
-      <p class="text-gray-400">Sistema de Recomendação para Técnicos em Campo</p>
-    </div>
 
-    <!-- Formulário de Entrada -->
-    <div class="bg-gray-900 rounded-2xl p-8 shadow-xl no-print">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label class="block text-sm font-medium mb-2">
-            <i class="fas fa-video mr-2 text-blue-400"></i>Total de Câmeras
-          </label>
-          <input id="cameras" type="number" value="14" min="1" max="500" 
-                 class="w-full bg-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
+<div class="max-w-5xl mx-auto p-6">
 
-        <div>
-          <label class="block text-sm font-medium mb-2">
-            <i class="fas fa-upload mr-2 text-blue-400"></i>Upload Disponível (Mbps)
-          </label>
-          <input id="upload" type="number" value="50" min="1" max="10000" step="10"
-                 class="w-full bg-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium mb-2">
-            <i class="fas fa-microchip mr-2 text-blue-400"></i>Codec
-          </label>
-          <select id="codec" class="w-full bg-gray-800 rounded-lg px-4 py-3">
-            <option value="H.264" selected>H.264</option>
-            <option value="H.265">H.265 (Mais econômico)</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium mb-2">
-            <i class="fas fa-tachometer-alt mr-2 text-blue-400"></i>Qualidade Desejada
-          </label>
-          <select id="qualidade" class="w-full bg-gray-800 rounded-lg px-4 py-3">
-            <option value="512">Econômica - 512 Kbps</option>
-            <option value="1024" selected>Padrão - 1024 Kbps (Recomendado)</option>
-            <option value="1536">Boa - 1536 Kbps</option>
-            <option value="2048">Ótima - 2048 Kbps</option>
-            <option value="3072">Excelente - 3072 Kbps</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium mb-2">
-            <i class="fas fa-percent mr-2 text-blue-400"></i>Limite de Consumo do Upload
-          </label>
-          <div class="flex items-center gap-4">
-            <input type="range" id="limiteConsumo" min="10" max="90" value="30" step="5"
-                   class="flex-1 h-2 bg-gray-700 rounded-lg cursor-pointer">
-            <div class="bg-gray-800 rounded-lg px-3 py-1 min-w-[60px] text-center">
-              <span id="limiteValue" class="text-xl font-bold text-yellow-400">30</span>
-              <span class="text-sm">%</span>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium mb-2">
-            <i class="fas fa-clock mr-2 text-blue-400"></i>FPS (Opcional)
-          </label>
-          <select id="fps" class="w-full bg-gray-800 rounded-lg px-4 py-3">
-            <option value="8">8 fps (Economia)</option>
-            <option value="10" selected>10 fps (Padrão)</option>
-            <option value="15">15 fps (Bom)</option>
-            <option value="20">20 fps (Ótimo)</option>
-            <option value="30">30 fps (Máximo)</option>
-          </select>
-        </div>
-      </div>
-
-      <button onclick="gerarRelatorio()" 
-              class="mt-8 w-full bg-blue-600 hover:bg-blue-700 transition py-4 rounded-xl text-xl font-semibold">
-        <i class="fas fa-file-alt mr-2"></i>Gerar Relatório Técnico
-      </button>
-    </div>
-
-    <!-- ÁREA DO RELATÓRIO TÉCNICO (será preenchida) -->
-    <div id="relatorio-container" class="mt-8 hidden no-print">
-      <!-- Relatório será inserido aqui -->
-    </div>
-
-    <!-- Modal de Impressão do Relatório -->
-    <div id="relatorio-impressao" class="hidden"></div>
+  <!-- HEADER -->
+  <div class="text-center mb-8 no-print">
+    <h1 class="text-4xl font-bold text-blue-500">📷 Calculadora de Câmeras IP</h1>
+    <p class="text-gray-400">Sistema técnico para dimensionamento</p>
   </div>
 
-  <script>
-    function gerarRelatorio() {
-      // Coletar dados
-      const cameras = parseInt(document.getElementById('cameras').value);
-      const upload = parseInt(document.getElementById('upload').value);
-      const codec = document.getElementById('codec').value;
-      const qualidadeKbps = parseInt(document.getElementById('qualidade').value);
-      const limiteConsumo = parseInt(document.getElementById('limiteConsumo').value);
-      const fps = parseInt(document.getElementById('fps').value);
-      
-      // Obter nome da qualidade
-      const qualidadeSelect = document.getElementById('qualidade');
-      const qualidadeNome = qualidadeSelect.options[qualidadeSelect.selectedIndex].text;
-      
-      // Ajustar bitrate baseado no codec e FPS
-      let bitrateAjustado = qualidadeKbps;
-      let subBitrate = Math.round(bitrateAjustado * 0.4);
-      
-      if (codec === 'H.265') {
-        bitrateAjustado = Math.round(bitrateAjustado * 0.6);
-        subBitrate = Math.round(bitrateAjustado * 0.35);
-      }
-      
-      // Ajuste por FPS (base 10 fps)
-      const fatorFPS = fps / 10;
-      bitrateAjustado = Math.round(bitrateAjustado * fatorFPS);
-      subBitrate = Math.round(subBitrate * fatorFPS);
-      
-      // Calcular consumo total
-      const bandaMainMbps = (bitrateAjustado * cameras) / 1000;
-      const bandaSubMbps = (subBitrate * cameras) / 1000;
-      const bandaTotalMbps = bandaMainMbps + bandaSubMbps;
-      const limiteUploadMbps = upload * (limiteConsumo / 100);
-      const porcentagemUso = (bandaTotalMbps / upload) * 100;
-      const estaOk = bandaTotalMbps <= limiteUploadMbps;
-      
-      // I-Frame recomendado (baseado no FPS, normalmente FPS * 15)
-      const iframeRecomendado = Math.min(200, Math.max(50, fps * 15));
-      
-      // Determinar resolução baseada no bitrate
-      let resolucao = "1920×1080 (1080P)";
-      let resolucaoTexto = "1080P (1920×1080)";
-      if (bitrateAjustado < 800) {
-        resolucao = "1280×720 (720P)";
-        resolucaoTexto = "720P (1280×720)";
-      } else if (bitrateAjustado >= 3000) {
-        resolucao = "3840×2160 (4K)";
-        resolucaoTexto = "4K (3840×2160)";
-      }
-      
-      // Determinar taxa de quadros recomendada
-      let fpsRecomendado = fps;
-      let taxaQuadrosTexto = `${fpsRecomendado} fps`;
-      
-      // Calcular armazenamento diário e mensal
-      const armazenamentoDiarioGB = (bandaMainMbps * 3600 * 24) / 8 / 1024;
-      const armazenamentoMensalGB = armazenamentoDiarioGB * 30;
-      
-      // Gerar HTML do relatório
-      const relatorioHTML = `
-        <div class="bg-white text-gray-800 rounded-2xl shadow-2xl overflow-hidden">
-          <!-- Cabeçalho -->
-          <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-6 text-white">
-            <div class="flex justify-between items-center">
-              <div>
-                <h1 class="text-2xl font-bold">📷 RELATÓRIO TÉCNICO - CÂMERAS IP</h1>
-                <p class="text-blue-100 mt-1">Configuração recomendada para instalação</p>
-              </div>
-              <div class="text-right">
-                <p class="text-sm">Data: ${new Date().toLocaleString('pt-BR')}</p>
-                <p class="text-sm">Documento: RTC-${new Date().getFullYear()}${(new Date().getMonth()+1).toString().padStart(2,'0')}${new Date().getDate().toString().padStart(2,'0')}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="p-6">
-            <!-- Resumo Executivo -->
-            <div class="mb-6 ${estaOk ? 'bg-green-50' : 'bg-red-50'} p-4 rounded-lg border ${estaOk ? 'border-green-200' : 'border-red-200'}">
-              <div class="flex items-center gap-3">
-                <div class="text-3xl">${estaOk ? '✅' : '❌'}</div>
-                <div>
-                  <p class="font-bold ${estaOk ? 'text-green-700' : 'text-red-700'} text-lg">
-                    ${estaOk ? 'CONFIGURAÇÃO VIÁVEL' : 'CONFIGURAÇÃO NÃO RECOMENDADA'}
-                  </p>
-                  <p class="${estaOk ? 'text-green-600' : 'text-red-600'}">
-                    ${estaOk ? `A rede suporta ${cameras} câmeras com folga de ${(limiteUploadMbps - bandaTotalMbps).toFixed(1)} Mbps.` : `A rede NÃO suporta ${cameras} câmeras. Excede o limite em ${(bandaTotalMbps - limiteUploadMbps).toFixed(1)} Mbps.`}
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <!-- CONFIGURAÇÃO PRINCIPAL (Formato requisitado) -->
-            <div class="bg-gray-100 rounded-lg p-5 mb-6">
-              <h2 class="text-xl font-bold text-gray-800 mb-4 border-b border-gray-300 pb-2">
-                <i class="fas fa-cog mr-2"></i>CONFIGURAÇÃO RECOMENDADA POR CÂMERA
-              </h2>
-              <table class="w-full">
-                <tr class="border-b border-gray-300">
-                  <td class="py-3 font-semibold text-gray-700 w-48">Tipo de fluxo</td>
-                  <td class="py-3 text-gray-800">Fluxo composto (MainStream + SubStream)</td>
-                </tr>
-                <tr class="border-b border-gray-300">
-                  <td class="py-3 font-semibold text-gray-700">Codificação de vídeo</td>
-                  <td class="py-3 text-gray-800">${codec}</td>
-                </tr>
-                <tr class="border-b border-gray-300">
-                  <td class="py-3 font-semibold text-gray-700">Resolução</td>
-                  <td class="py-3 text-gray-800">${resolucaoTexto}</td>
-                </tr>
-                <tr class="border-b border-gray-300">
-                  <td class="py-3 font-semibold text-gray-700">Intervalo de Quadros I</td>
-                  <td class="py-3 text-gray-800">${iframeRecomendado} (Recomendado para ${fpsRecomendado} fps)</td>
-                </tr>
-                <tr class="border-b border-gray-300">
-                  <td class="py-3 font-semibold text-gray-700">Taxa de quadros</td>
-                  <td class="py-3 text-gray-800">${taxaQuadrosTexto}</td>
-                </tr>
-                <tr class="border-b border-gray-300">
-                  <td class="py-3 font-semibold text-gray-700">Controle de taxa</td>
-                  <td class="py-3 text-gray-800">Taxa de bits constante (CBR)</td>
-                </tr>
-                <tr>
-                  <td class="py-3 font-semibold text-gray-700">Taxa de bits (Bitrate)</td>
-                  <td class="py-3 text-gray-800">
-                    <span class="font-bold text-blue-600">${bitrateAjustado} Kbps</span> (MainStream) + 
-                    <span class="font-bold text-green-600">${subBitrate} Kbps</span> (SubStream)
-                  </td>
-                </tr>
-              </table>
-            </div>
-            
-            <!-- INFORMAÇÕES DE BANDA UPLOAD -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
-              <div class="bg-blue-50 rounded-lg p-4">
-                <h3 class="font-bold text-blue-800 mb-3"><i class="fas fa-upload mr-2"></i>Consumo de Upload</h3>
-                <table class="w-full text-sm">
-                  <tr class="border-b border-blue-200">
-                    <td class="py-2 text-blue-700">MainStream (${cameras} câmeras)</td>
-                    <td class="py-2 text-right font-bold">${bandaMainMbps.toFixed(2)} Mbps</td>
-                  </tr>
-                  <tr class="border-b border-blue-200">
-                    <td class="py-2 text-blue-700">SubStream (${cameras} câmeras)</td>
-                    <td class="py-2 text-right font-bold">${bandaSubMbps.toFixed(2)} Mbps</td>
-                  </tr>
-                  <tr class="bg-blue-100">
-                    <td class="py-2 font-bold text-blue-800">TOTAL DE UPLOAD</td>
-                    <td class="py-2 text-right font-bold text-blue-800">${bandaTotalMbps.toFixed(2)} Mbps</td>
-                  </tr>
-                </table>
-              </div>
-              
-              <div class="bg-purple-50 rounded-lg p-4">
-                <h3 class="font-bold text-purple-800 mb-3"><i class="fas fa-network-wired mr-2"></i>Capacidade da Rede</h3>
-                <table class="w-full text-sm">
-                  <tr class="border-b border-purple-200">
-                    <td class="py-2 text-purple-700">Upload Disponível</td>
-                    <td class="py-2 text-right font-bold">${upload} Mbps</td>
-                  </tr>
-                  <tr class="border-b border-purple-200">
-                    <td class="py-2 text-purple-700">Limite Configurado (${limiteConsumo}%)</td>
-                    <td class="py-2 text-right font-bold">${limiteUploadMbps.toFixed(1)} Mbps</td>
-                  </tr>
-                  <tr class="border-b border-purple-200">
-                    <td class="py-2 text-purple-700">Uso da Rede</td>
-                    <td class="py-2 text-right font-bold ${porcentagemUso > limiteConsumo ? 'text-red-600' : 'text-green-600'}">${porcentagemUso.toFixed(1)}%</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 text-purple-700">Banda Livre</td>
-                    <td class="py-2 text-right font-bold text-green-600">${(upload - bandaTotalMbps).toFixed(2)} Mbps</td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-            
-            <!-- ARMAZENAMENTO -->
-            <div class="bg-gray-100 rounded-lg p-4 mb-6">
-              <h3 class="font-bold text-gray-800 mb-3"><i class="fas fa-hdd mr-2"></i>Estimativa de Armazenamento</h3>
-              <div class="grid grid-cols-2 gap-4 text-center">
-                <div class="bg-white rounded-lg p-3">
-                  <p class="text-gray-500 text-sm">Por câmera (diário)</p>
-                  <p class="text-xl font-bold text-blue-600">${(armazenamentoDiarioGB / cameras).toFixed(1)} GB</p>
-                </div>
-                <div class="bg-white rounded-lg p-3">
-                  <p class="text-gray-500 text-sm">Total (30 dias)</p>
-                  <p class="text-xl font-bold text-blue-600">${armazenamentoMensalGB.toFixed(0)} GB</p>
-                </div>
-              </div>
-            </div>
-            
-            <!-- OBSERVAÇÕES E RECOMENDAÇÕES -->
-            <div class="bg-yellow-50 rounded-lg p-4">
-              <h3 class="font-bold text-yellow-800 mb-2"><i class="fas fa-lightbulb mr-2"></i>Observações Técnicas</h3>
-              <ul class="text-sm text-yellow-800 space-y-1 list-disc list-inside">
-                ${!estaOk ? `<li>⚠️ Consumo de upload excede o limite de ${limiteConsumo}%. Considere reduzir a qualidade ou o número de câmeras.</li>` : ''}
-                <li>📌 Recomenda-se switch Gigabit para melhor desempenho.</li>
-                <li>🔌 Verifique a alimentação PoE (Power over Ethernet) se aplicável.</li>
-                <li>📡 Para acesso remoto, considere o consumo de upload adicional.</li>
-                <li>🎥 O I-Frame configurado como ${iframeRecomendado} (GOP = FPS × 15) oferece bom equilíbrio entre qualidade e compressão.</li>
-                <li>💾 Armazenamento calculado com base em gravação 24/7 em CBR.</li>
-              </ul>
-            </div>
-            
-            <!-- Rodapé -->
-            <div class="mt-6 pt-4 border-t border-gray-200 text-center text-gray-500 text-xs">
-              <p>Documento gerado automaticamente pelo Sistema de Calculadora de Câmeras IP</p>
-              <p>Este relatório serve como guia para configuração. Ajustes finos podem ser necessários conforme ambiente.</p>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      // Exibir no container
-      const container = document.getElementById('relatorio-container');
-      container.innerHTML = relatorioHTML;
-      container.classList.remove('hidden');
-      
-      // Também preparar para impressão
-      const impressaoDiv = document.getElementById('relatorio-impressao');
-      impressaoDiv.innerHTML = relatorioHTML;
-      
-      // Scroll para o relatório
-      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      
-      // Adicionar botão de imprimir após gerar
-      addPrintButton();
-    }
-    
-    function addPrintButton() {
-      const container = document.getElementById('relatorio-container');
-      if (!container.querySelector('.btn-print')) {
-        const printBtn = document.createElement('div');
-        printBtn.className = 'flex justify-center gap-4 mt-6 no-print btn-print';
-        printBtn.innerHTML = `
-          <button onclick="imprimirRelatorio()" class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-semibold transition">
-            <i class="fas fa-print mr-2"></i>Imprimir Relatório
-          </button>
-          <button onclick="baixarRelatorio()" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition">
-            <i class="fas fa-download mr-2"></i>Baixar PDF (HTML)
-          </button>
-        `;
-        container.appendChild(printBtn);
-      }
-    }
-    
-    function imprimirRelatorio() {
-      const conteudo = document.getElementById('relatorio-impressao').innerHTML;
-      const win = window.open('', '_blank');
-      win.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Relatório Técnico - Câmeras IP</title>
-          <meta charset="UTF-8">
-          <script src="https://cdn.tailwindcss.com/3.4.16">`
-      );
-      win.document.write(`</script>
-          <style>
-            body { font-family: 'Segoe UI', system-ui, sans-serif; padding: 20px; }
-            @media print {
-              body { padding: 0; margin: 0; }
-            }
-          </style>
-        </head>
-        <body>
-          ${conteudo}
-        </body>
-        </html>
-      `);
-      win.document.close();
-      win.print();
-    }
-    
-    function baixarRelatorio() {
-      const conteudo = document.getElementById('relatorio-impressao').innerHTML;
-      const blob = new Blob([`
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Relatório Técnico - Câmeras IP</title>
-          <meta charset="UTF-8">
-          <script src="https://cdn.tailwindcss.com/3.4.16">
-        `, `</script>
-          <style>
-            body { font-family: 'Segoe UI', system-ui, sans-serif; padding: 20px; }
-          </style>
-        </head>
-        <body>
-          ${conteudo}
-        </body>
-        </html>
-      `], { type: 'text/html' });
-      
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `relatorio_tecnico_cameras_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.html`;
-      link.click();
-      URL.revokeObjectURL(link.href);
-    }
-    
-    // Atualizar display do limite
-    document.getElementById('limiteConsumo').addEventListener('input', function() {
-      document.getElementById('limiteValue').textContent = this.value;
-    });
-    
-    // Gerar relatório inicial automaticamente
-    window.onload = () => {
-      gerarRelatorio();
-    };
-  </script>
+  <!-- FORM -->
+  <div class="bg-gray-900 rounded-2xl p-8 shadow-xl no-print">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <input id="cameras" type="number" value="14" class="input">
+      <input id="upload" type="number" value="50" class="input">
+
+      <select id="codec" class="input">
+        <option value="H.264">H.264</option>
+        <option value="H.265">H.265</option>
+      </select>
+
+      <select id="qualidade" class="input">
+        <option value="512">512 Kbps</option>
+        <option value="1024" selected>1024 Kbps</option>
+        <option value="2048">2048 Kbps</option>
+      </select>
+
+      <input type="range" id="limiteConsumo" min="10" max="90" value="30">
+      <span id="limiteValue">30%</span>
+
+      <select id="fps" class="input">
+        <option value="10" selected>10 FPS</option>
+        <option value="15">15 FPS</option>
+        <option value="30">30 FPS</option>
+      </select>
+
+    </div>
+
+    <button onclick="gerarRelatorio()" class="mt-6 w-full bg-blue-600 py-3 rounded-xl">
+      Gerar Relatório
+    </button>
+  </div>
+
+  <!-- RELATÓRIO -->
+  <div id="relatorio-container" class="mt-8 hidden no-print"></div>
+
+  <!-- IMPRESSÃO -->
+  <div id="relatorio-impressao" class="hidden"></div>
+
+</div>
+
+<script>
+
+function gerarRelatorio() {
+
+  const cameras = +document.getElementById('cameras').value;
+  const upload = +document.getElementById('upload').value;
+  const codec = document.getElementById('codec').value;
+  const qualidade = +document.getElementById('qualidade').value;
+  const fps = +document.getElementById('fps').value;
+  const limite = +document.getElementById('limiteConsumo').value;
+
+  let bitrate = qualidade;
+  if (codec === 'H.265') bitrate *= 0.6;
+
+  bitrate *= (fps / 10);
+
+  const total = (bitrate * cameras) / 1000;
+  const limiteMbps = upload * (limite / 100);
+  const ok = total <= limiteMbps;
+
+  const html = `
+  <div class="bg-white text-black p-6 rounded-xl">
+
+    <h1 class="text-2xl font-bold mb-4">Relatório Técnico</h1>
+
+    <p><b>Status:</b> ${ok ? 'OK' : 'EXCEDIDO'}</p>
+    <p><b>Câmeras:</b> ${cameras}</p>
+    <p><b>Bitrate:</b> ${bitrate.toFixed(0)} Kbps</p>
+    <p><b>Consumo:</b> ${total.toFixed(2)} Mbps</p>
+    <p><b>Limite:</b> ${limiteMbps.toFixed(2)} Mbps</p>
+
+  </div>
+  `;
+
+  document.getElementById('relatorio-container').innerHTML = html;
+  document.getElementById('relatorio-container').classList.remove('hidden');
+
+  document.getElementById('relatorio-impressao').innerHTML = html;
+
+  addButtons();
+}
+
+function addButtons() {
+
+  const container = document.getElementById('relatorio-container');
+
+  if (container.querySelector('.btns')) return;
+
+  const div = document.createElement('div');
+  div.className = 'btns mt-6 flex gap-4';
+
+  div.innerHTML = `
+    <button onclick="imprimir()" class="bg-green-600 px-4 py-2 rounded">Imprimir</button>
+    <button onclick="baixar()" class="bg-blue-600 px-4 py-2 rounded">Baixar</button>
+  `;
+
+  container.appendChild(div);
+}
+
+function imprimir() {
+
+  const conteudo = document.getElementById('relatorio-impressao').innerHTML;
+
+  const win = window.open('', '_blank');
+
+  if (!win) {
+    alert("Popup bloqueado");
+    return;
+  }
+
+  win.document.write(`
+    <html>
+    <head>
+      <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>${conteudo}</body>
+    </html>
+  `);
+
+  win.document.close();
+  win.onload = () => win.print();
+}
+
+function baixar() {
+
+  const conteudo = document.getElementById('relatorio-impressao').innerHTML;
+
+  const html = `
+    <html>
+    <head>
+      <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>${conteudo}</body>
+    </html>
+  `;
+
+  const blob = new Blob([html], { type: 'text/html' });
+
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = "relatorio.html";
+  a.click();
+}
+
+document.getElementById('limiteConsumo').addEventListener('input', e => {
+  document.getElementById('limiteValue').innerText = e.target.value + '%';
+});
+
+window.onload = gerarRelatorio;
+
+</script>
+
 </body>
 </html>
