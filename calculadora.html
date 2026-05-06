@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora IP - Upload Controlado</title>
+  <title>Calculadora IP - Padrão Binário (1024)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body { font-family: 'Segoe UI', system-ui, sans-serif; }
-    .upload-badge {
+    .valor-destaque {
       background: linear-gradient(135deg, #1e3a8a 0%, #064e3b 100%);
     }
   </style>
@@ -21,10 +21,14 @@
       <h1 class="text-4xl font-bold mb-2 text-blue-500">
         📷 Calculadora de Câmeras IP
       </h1>
-      <div class="inline-block bg-orange-900/50 rounded-full px-4 py-1 text-sm border border-orange-500">
-        <i class="fas fa-upload mr-2"></i>Monitoramento de UPLOAD (envio de dados)
+      <div class="inline-flex gap-2 flex-wrap justify-center">
+        <div class="bg-green-900/50 rounded-full px-4 py-1 text-sm border border-green-500">
+          <i class="fas fa-upload mr-2"></i>Upload
+        </div>
+        <div class="bg-purple-900/50 rounded-full px-4 py-1 text-sm border border-purple-500">
+          <i class="fas fa-microchip mr-2"></i>Valor Padrão: 1024 Kbps
+        </div>
       </div>
-      <p class="text-gray-400 mt-2 text-sm">As câmeras consomem banda de UPLOAD - essencial para provedores e links assimétricos</p>
     </div>
 
     <div class="bg-gray-900 rounded-2xl p-8 shadow-xl">
@@ -44,13 +48,29 @@
             <i class="fas fa-upload mr-2 text-blue-400"></i>Upload Disponível (Mbps)
           </label>
           <select id="upload" class="w-full bg-gray-800 rounded-lg px-4 py-3">
-            <option value="10">10 Mbps (ADSL Básico)</option>
+            <option value="10">10 Mbps</option>
             <option value="20">20 Mbps</option>
-            <option value="50" selected>50 Mbps (Fibra Comum)</option>
-            <option value="100">100 Mbps (Fibra Avançada)</option>
+            <option value="50" selected>50 Mbps</option>
+            <option value="100">100 Mbps</option>
             <option value="200">200 Mbps</option>
-            <option value="500">500 Mbps (Dedicado)</option>
-            <option value="1000">1 Gbps (Empresarial)</option>
+            <option value="500">500 Mbps</option>
+            <option value="1000">1000 Mbps (1 Gbps)</option>
+          </select>
+        </div>
+
+        <!-- Qualidade (Bitrate em Kbps) -->
+        <div>
+          <label class="block text-sm font-medium mb-2">
+            <i class="fas fa-chart-line mr-2 text-blue-400"></i>Qualidade Desejada
+          </label>
+          <select id="qualidade" class="w-full bg-gray-800 rounded-lg px-4 py-3">
+            <option value="512">Econômica - 512 Kbps (0.5 Mbps)</option>
+            <option value="1024" selected>⭐ Padrão - 1024 Kbps (1 Mbps) - RECOMENDADO</option>
+            <option value="1536">Boa - 1536 Kbps (1.5 Mbps)</option>
+            <option value="2048">Ótima - 2048 Kbps (2 Mbps)</option>
+            <option value="3072">Excelente - 3072 Kbps (3 Mbps)</option>
+            <option value="4096">4K - 4096 Kbps (4 Mbps)</option>
+            <option value="8192">4K Alta - 8192 Kbps (8 Mbps)</option>
           </select>
         </div>
 
@@ -62,14 +82,44 @@
           <div class="grid grid-cols-2 gap-2">
             <button id="btn-h264" onclick="setCodec('h264')" 
                     class="bg-blue-600 hover:bg-blue-700 py-3 rounded-lg transition font-semibold">
-              H.264
+              H.264 (Padrão)
             </button>
             <button id="btn-h265" onclick="setCodec('h265')" 
                     class="bg-gray-700 hover:bg-gray-600 py-3 rounded-lg transition font-semibold">
-              H.265 (40% economia)
+              H.265 (-40% banda)
             </button>
           </div>
           <input type="hidden" id="codec" value="h264">
+        </div>
+
+        <!-- FPS -->
+        <div>
+          <label class="block text-sm font-medium mb-2">
+            <i class="fas fa-clock mr-2 text-blue-400"></i>FPS (Quadros por segundo)
+          </label>
+          <select id="fps" class="w-full bg-gray-800 rounded-lg px-4 py-3">
+            <option value="8">8 fps (Economia)</option>
+            <option value="10" selected>10 fps (Padrão)</option>
+            <option value="15">15 fps (Bom)</option>
+            <option value="20">20 fps (Ótimo)</option>
+            <option value="25">25 fps (Excelente)</option>
+            <option value="30">30 fps (Máximo)</option>
+          </select>
+        </div>
+
+        <!-- I-Frame -->
+        <div>
+          <label class="block text-sm font-medium mb-2">
+            <i class="fas fa-code-branch mr-2 text-blue-400"></i>I-Frame (GOP)
+          </label>
+          <select id="iframe" class="w-full bg-gray-800 rounded-lg px-4 py-3">
+            <option value="30">30 (Rápido)</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="150" selected>150 (Padrão)</option>
+            <option value="200">200 (Economia)</option>
+            <option value="250">250</option>
+          </select>
         </div>
 
         <!-- Tipo de Fluxo -->
@@ -83,10 +133,10 @@
           </select>
         </div>
 
-        <!-- Porcentagem de Consumo Desejada -->
+        <!-- Porcentagem de Consumo -->
         <div class="md:col-span-2">
           <label class="block text-sm font-medium mb-2">
-            <i class="fas fa-percent mr-2 text-blue-400"></i>Limite de Consumo de Upload Desejado
+            <i class="fas fa-percent mr-2 text-blue-400"></i>Limite de Consumo de Upload
           </label>
           <div class="flex items-center gap-4">
             <input type="range" id="percentualLimite" min="10" max="90" value="30" step="5"
@@ -106,33 +156,32 @@
         </div>
       </div>
 
-      <!-- Parâmetros Fixos -->
-      <div class="mt-6 bg-gray-800/50 rounded-xl p-5 border border-gray-700">
-        <h3 class="text-gray-300 font-semibold mb-3">
-          <i class="fas fa-cog mr-2"></i>Configuração Padrão (Por Câmera)
+      <!-- Tabela de Referência de Bitrates -->
+      <div class="mt-6 bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+        <h3 class="text-sm font-semibold text-gray-300 mb-2">
+          <i class="fas fa-table mr-2"></i>Referência de Bitrates (Valores Padrão)
         </h3>
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 text-sm">
-          <div class="bg-gray-900/50 rounded-lg p-2 text-center">
-            <span class="text-gray-400">Resolução</span>
-            <p class="font-bold text-blue-300">1080p</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+          <div class="bg-gray-900/50 rounded p-2 text-center">
+            <span class="text-gray-400">Econômico</span>
+            <p class="font-bold text-green-400">512 Kbps</p>
           </div>
-          <div class="bg-gray-900/50 rounded-lg p-2 text-center">
-            <span class="text-gray-400">FPS</span>
-            <p class="font-bold text-blue-300">10 fps</p>
+          <div class="bg-gray-900/50 rounded p-2 text-center ring-1 ring-blue-500">
+            <span class="text-gray-400">⭐ Padrão</span>
+            <p class="font-bold text-blue-400">1024 Kbps</p>
           </div>
-          <div class="bg-gray-900/50 rounded-lg p-2 text-center">
-            <span class="text-gray-400">I-Frame</span>
-            <p class="font-bold text-blue-300">150</p>
+          <div class="bg-gray-900/50 rounded p-2 text-center">
+            <span class="text-gray-400">Boa qualidade</span>
+            <p class="font-bold text-yellow-400">1536 Kbps</p>
           </div>
-          <div class="bg-gray-900/50 rounded-lg p-2 text-center">
-            <span class="text-gray-400">Bitrate H.264</span>
-            <p class="font-bold text-blue-300">1181 Kbps</p>
-          </div>
-          <div class="bg-gray-900/50 rounded-lg p-2 text-center">
-            <span class="text-gray-400">Bitrate H.265</span>
-            <p class="font-bold text-blue-300">708 Kbps</p>
+          <div class="bg-gray-900/50 rounded p-2 text-center">
+            <span class="text-gray-400">Excelente</span>
+            <p class="font-bold text-purple-400">2048 Kbps</p>
           </div>
         </div>
+        <p class="text-xs text-gray-500 mt-2 text-center">
+          <i class="fas fa-info-circle mr-1"></i>Baseado em 1080p, 10 fps, H.264
+        </p>
       </div>
     </div>
 
@@ -154,7 +203,7 @@
         <!-- Consumo Detalhado -->
         <div class="bg-gray-900 rounded-2xl p-6">
           <h3 class="text-xl font-semibold text-green-400 mb-4">
-            <i class="fas fa-chart-pie mr-2"></i>Consumo de Upload Detalhado
+            <i class="fas fa-chart-pie mr-2"></i>Consumo de Upload
           </h3>
           <table class="w-full text-sm">
             <tr class="border-b border-gray-700">
@@ -176,8 +225,8 @@
           
           <div class="mt-4 p-3 bg-blue-950/30 rounded-lg">
             <p class="text-xs text-gray-300">
-              <i class="fas fa-info-circle mr-1 text-blue-400"></i>
-              Este é o consumo de UPLOAD (envio de dados das câmeras para o NVR/Cloud)
+              <i class="fas fa-calculator mr-1 text-blue-400"></i>
+              Cálculo: <span id="formula_calculo">-</span>
             </p>
           </div>
         </div>
@@ -189,11 +238,11 @@
           </h3>
           <table class="w-full text-sm">
             <tr class="border-b border-gray-700">
-              <td class="py-2 font-semibold">Upload Total Disponíveleth
+              <td class="py-2 font-semibold">Upload Total</td>
               <td id="upload_total" class="text-right font-bold">-</td>
             </tr>
             <tr class="border-b border-gray-700">
-              <td class="py-2 font-semibold">Limite Configurado (Upload)</td>
+              <td class="py-2 font-semibold">Limite Configurado (<span id="limite_percent">30</span>%)</td>
               <td id="limite_configurado" class="text-right text-yellow-400 font-bold">-</td>
             </tr>
             <tr class="border-b border-gray-700">
@@ -201,7 +250,7 @@
               <td id="consumo_atual" class="text-right font-bold">-</td>
             </tr>
             <tr class="border-b border-gray-700">
-              <td class="py-2 font-semibold">Upload Livre Restante</td>
+              <td class="py-2 font-semibold">Upload Livre</td>
               <td id="upload_livre" class="text-right text-green-400 font-bold">-</td>
             </tr>
           </table>
@@ -217,85 +266,67 @@
               <div id="barra_consumo" class="h-full transition-all duration-500 rounded-full" style="width: 0%"></div>
               <div id="linha_limite" class="absolute top-0 bottom-0 w-0.5 bg-yellow-400 hidden" style="left: 30%"></div>
             </div>
-            <div class="flex justify-between text-xs mt-1">
-              <span class="text-green-400">Uso atual</span>
-              <span class="text-yellow-400">Seu limite: <span id="limite_percentual">30</span>%</span>
-            </div>
           </div>
         </div>
       </div>
 
-      <!-- Gráfico de Comparação -->
-      <div class="mt-6 bg-gray-800 rounded-xl p-5">
-        <h4 class="font-semibold text-purple-400 mb-3">
-          <i class="fas fa-chart-bar mr-2"></i>Comparativo de Consumo por Codec
+      <!-- Capacidade Máxima de Câmeras -->
+      <div class="mt-6 bg-gray-800 rounded-xl p-5 overflow-x-auto">
+        <h4 class="font-semibold text-green-400 mb-3">
+          <i class="fas fa-table mr-2"></i>Capacidade Máxima (respeitando 1024 Kbps padrão)
         </h4>
-        <canvas id="graficoComparacao" height="100" class="w-full"></canvas>
-        <p class="text-xs text-gray-400 mt-2 text-center">
-          Comparação do consumo de upload entre H.264 e H.265 com suas configurações atuais
-        </p>
+        <table class="w-full text-sm">
+          <thead class="border-b border-gray-700">
+            <tr>
+              <th class="text-left py-2">Upload</th>
+              <th class="text-left py-2">Limite 30%</th>
+              <th class="text-left py-2">H.264</th>
+              <th class="text-left py-2">H.265</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaCapacidade"></tbody>
+        </table>
       </div>
 
       <!-- Recomendações -->
       <div class="mt-6 bg-gray-900 rounded-xl p-5">
         <h4 class="font-semibold text-orange-400 mb-3">
-          <i class="fas fa-lightbulb mr-2"></i>Recomendações Personalizadas
+          <i class="fas fa-lightbulb mr-2"></i>Recomendações
         </h4>
         <ul id="recomendacoes" class="space-y-2 text-sm">
           <li><i class="fas fa-spinner fa-spin mr-2"></i>Calculando...</li>
         </ul>
       </div>
 
-      <!-- Tabela de Capacidade -->
-      <div class="mt-6 bg-gray-800 rounded-xl p-5 overflow-x-auto">
-        <h4 class="font-semibold text-green-400 mb-3">
-          <i class="fas fa-table mr-2"></i>Capacidade Máxima de Câmeras por Upload
-        </h4>
-        <table class="w-full text-sm">
-          <thead class="border-b border-gray-700">
-            <tr>
-              <th class="text-left py-2">Upload Disponível</th>
-              <th class="text-left py-2">Limite 30%</th>
-              <th class="text-left py-2">H.264 (1181 Kbps)</th>
-              <th class="text-left py-2">H.265 (708 Kbps)</th>
-            </tr>
-          </thead>
-          <tbody id="tabelaCapacidade">
-            <!-- Preenchido via JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Botões de Ação -->
+      <!-- Botões -->
       <div class="mt-6 flex justify-center gap-4 flex-wrap">
-        <button onclick="exportarRelatorio()" 
-                class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-semibold transition">
-          <i class="fas fa-download mr-2"></i>Exportar Relatório
+        <button onclick="exportarRelatorio()" class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-semibold transition">
+          <i class="fas fa-download mr-2"></i>Exportar
         </button>
-        <button onclick="window.print()" 
-                class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg font-semibold transition">
+        <button onclick="window.print()" class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg font-semibold transition">
           <i class="fas fa-print mr-2"></i>Imprimir
         </button>
-        <button onclick="copiarResultados()" 
-                class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition">
-          <i class="fas fa-copy mr-2"></i>Copiar Resultados
+        <button onclick="copiarResultados()" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition">
+          <i class="fas fa-copy mr-2"></i>Copiar
         </button>
       </div>
     </div>
   </div>
 
   <script>
-    // Parâmetros FIXOS
-    const PADRAO = {
-      resolucao: '1080p',
-      fps: 10,
-      iframe: 150,
-      bitrateH264: 1181, // Kbps
-      bitrateH265: 708   // Kbps (60% do H.264)
+    // BITRATES PADRÃO (valores redondos em binário)
+    const BITRATES = {
+      // Resolução: 1080p
+      '512': { h264: 512, h265: 307 },   // 0.5 Mbps
+      '1024': { h264: 1024, h265: 614 },  // 1 Mbps ⭐ PADRÃO
+      '1536': { h264: 1536, h265: 922 },  // 1.5 Mbps
+      '2048': { h264: 2048, h265: 1229 }, // 2 Mbps
+      '3072': { h264: 3072, h265: 1843 }, // 3 Mbps
+      '4096': { h264: 4096, h265: 2458 }, // 4 Mbps
+      '8192': { h264: 8192, h265: 4915 }  // 8 Mbps
     };
 
     let codecAtual = 'h264';
-    let grafico = null;
 
     function setCodec(codec) {
       codecAtual = codec;
@@ -318,59 +349,69 @@
     function calcular() {
       const cameras = parseInt(document.getElementById('cameras').value) || 1;
       const upload = parseInt(document.getElementById('upload').value);
+      const qualidade = document.getElementById('qualidade').value;
+      const fps = parseInt(document.getElementById('fps').value);
+      const iframe = parseInt(document.getElementById('iframe').value);
       const fluxo = document.getElementById('fluxo').value;
       const percentualLimite = parseInt(document.getElementById('percentualLimite').value);
       
-      // Atualizar display do percentual
+      // Atualizar display
       document.getElementById('percentualValue').textContent = percentualLimite;
-      document.getElementById('limite_percentual').textContent = percentualLimite;
+      document.getElementById('limite_percent').textContent = percentualLimite;
       
-      // Bitrates baseados no codec
-      const bitrateMain = codecAtual === 'h264' ? PADRAO.bitrateH264 : PADRAO.bitrateH265;
-      const bitrateSub = codecAtual === 'h264' ? Math.round(bitrateMain * 0.4) : Math.round(bitrateMain * 0.35);
+      // Bitrate baseado na qualidade escolhida
+      const bitrateMain = BITRATES[qualidade][codecAtual];
       
-      // Cálculo de bandas em Mbps
-      let bandaMain = (bitrateMain * cameras) / 1000;
-      let bandaSub = fluxo === 'composto' ? (bitrateSub * cameras) / 1000 : 0;
+      // SubStream = 40% do Main (H.264) ou 35% (H.265)
+      const percentSub = codecAtual === 'h264' ? 0.4 : 0.35;
+      const bitrateSub = Math.round(bitrateMain * percentSub);
+      
+      // Ajuste por FPS (proporcional)
+      const fpsBase = 10;
+      const fatorFPS = fps / fpsBase;
+      const bitrateMainAjustado = Math.round(bitrateMain * fatorFPS);
+      const bitrateSubAjustado = Math.round(bitrateSub * fatorFPS);
+      
+      // Calcular bandas
+      let bandaMain = (bitrateMainAjustado * cameras) / 1000;
+      let bandaSub = fluxo === 'composto' ? (bitrateSubAjustado * cameras) / 1000 : 0;
       let bandaTotal = bandaMain + bandaSub;
       
-      // Calcular limite baseado na porcentagem escolhida
+      // Limites
       const limiteUpload = upload * (percentualLimite / 100);
       const porcentagemUso = (bandaTotal / upload) * 100;
       const estaDentro = bandaTotal <= limiteUpload;
-      const excedente = bandaTotal - limiteUpload;
-      const uploadLivre = upload - bandaTotal;
       
       // Atualizar UI
-      document.getElementById('main_bitrate').innerHTML = `${bitrateMain} <span class="text-gray-400 text-xs">Kbps/câmera</span>`;
+      document.getElementById('main_bitrate').innerHTML = `${bitrateMainAjustado} <span class="text-gray-400 text-xs">Kbps/câmera</span>`;
       document.getElementById('main_banda').textContent = `${bandaMain.toFixed(2)} Mbps`;
-      document.getElementById('sub_bitrate').innerHTML = fluxo === 'composto' ? `${bitrateSub} <span class="text-gray-400 text-xs">Kbps/câmera</span>` : '-';
+      document.getElementById('sub_bitrate').innerHTML = fluxo === 'composto' ? `${bitrateSubAjustado} <span class="text-gray-400 text-xs">Kbps/câmera</span>` : '-';
       document.getElementById('sub_banda').textContent = fluxo === 'composto' ? `${bandaSub.toFixed(2)} Mbps` : 'Desativado';
       document.getElementById('total_banda').textContent = `${bandaTotal.toFixed(2)} Mbps`;
       
-      // Análise da rede
-      document.getElementById('upload_total').innerHTML = `${upload} <span class="text-sm text-gray-400">Mbps</span>`;
-      document.getElementById('limite_configurado').innerHTML = `${limiteUpload.toFixed(1)} <span class="text-sm text-gray-400">Mbps (${percentualLimite}%)</span>`;
-      document.getElementById('consumo_atual').innerHTML = `<span class="${estaDentro ? 'text-green-400' : 'text-red-400'}">${bandaTotal.toFixed(2)} Mbps (${porcentagemUso.toFixed(1)}%)</span>`;
-      document.getElementById('upload_livre').innerHTML = `${Math.max(0, uploadLivre).toFixed(2)} <span class="text-sm text-gray-400">Mbps</span>`;
+      // Fórmula de cálculo
+      document.getElementById('formula_calculo').innerHTML = `${bitrateMainAjustado} Kbps × ${cameras} câmeras ${fluxo === 'composto' ? `+ ${bitrateSubAjustado} Kbps × ${cameras}` : ''} = ${(bitrateMainAjustado * cameras / 1000).toFixed(2)} Mbps`;
       
-      // Barra de consumo
+      // Análise
+      document.getElementById('upload_total').innerHTML = `${upload} <span class="text-sm text-gray-400">Mbps</span>`;
+      document.getElementById('limite_configurado').innerHTML = `${limiteUpload.toFixed(1)} <span class="text-sm text-gray-400">Mbps</span>`;
+      document.getElementById('consumo_atual').innerHTML = `<span class="${estaDentro ? 'text-green-400' : 'text-red-400'}">${bandaTotal.toFixed(2)} Mbps (${porcentagemUso.toFixed(1)}%)</span>`;
+      document.getElementById('upload_livre').innerHTML = `${Math.max(0, upload - bandaTotal).toFixed(2)} <span class="text-sm text-gray-400">Mbps</span>`;
+      
+      // Barra
       const percentualBarra = Math.min(100, (bandaTotal / upload) * 100);
       const barra = document.getElementById('barra_consumo');
       barra.style.width = `${percentualBarra}%`;
       
-      if (percentualBarra <= percentualLimite * 0.5) {
-        barra.style.backgroundColor = '#22c55e';
-      } else if (percentualBarra <= percentualLimite) {
-        barra.style.backgroundColor = '#eab308';
+      if (percentualBarra <= percentualLimite) {
+        barra.style.backgroundColor = percentualBarra <= percentualLimite * 0.6 ? '#22c55e' : '#eab308';
       } else {
         barra.style.backgroundColor = '#ef4444';
       }
       
-      // Linha de limite na barra
+      // Linha limite
       const linhaLimite = document.getElementById('linha_limite');
-      const limitePos = (percentualLimite / 100) * 100;
-      linhaLimite.style.left = `${limitePos}%`;
+      linhaLimite.style.left = `${percentualLimite}%`;
       linhaLimite.classList.remove('hidden');
       document.getElementById('limite_marcador').textContent = `${percentualLimite}% (seu limite)`;
       
@@ -385,22 +426,22 @@
         statusCard.className = 'rounded-2xl p-6 mb-6 bg-gradient-to-r from-green-900/50 to-emerald-900/50 border border-green-500';
         statusTitle.innerHTML = '<i class="fas fa-check-circle mr-2"></i> ✅ CONFIGURAÇÃO APROVADA';
         statusTitle.className = 'text-2xl font-bold mb-2 text-green-400';
-        statusMessage.innerHTML = `${cameras} câmeras consomem ${bandaTotal.toFixed(2)} Mbps (${porcentagemUso.toFixed(1)}% do upload)`;
-        statusDetalhe.innerHTML = `Dentro do limite de ${percentualLimite}% (${limiteUpload.toFixed(1)} Mbps). Folga de ${(limiteUpload - bandaTotal).toFixed(1)} Mbps.`;
+        statusMessage.innerHTML = `${cameras} câmeras → ${bandaTotal.toFixed(2)} Mbps (${porcentagemUso.toFixed(1)}% do upload)`;
+        statusDetalhe.innerHTML = `Dentro do limite de ${percentualLimite}%. Folga de ${(limiteUpload - bandaTotal).toFixed(1)} Mbps.`;
         statusIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
       } else if (estaDentro) {
         statusCard.className = 'rounded-2xl p-6 mb-6 bg-gradient-to-r from-yellow-900/50 to-amber-900/50 border border-yellow-500';
-        statusTitle.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> ⚠️ DENTRO DO LIMITE - PRÓXIMO';
+        statusTitle.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> ⚠️ PRÓXIMO DO LIMITE';
         statusTitle.className = 'text-2xl font-bold mb-2 text-yellow-400';
-        statusMessage.innerHTML = `${cameras} câmeras → ${bandaTotal.toFixed(2)} Mbps (${porcentagemUso.toFixed(1)}% do upload)`;
-        statusDetalhe.innerHTML = `Muito próximo do limite de ${percentualLimite}%. Folga de apenas ${(limiteUpload - bandaTotal).toFixed(1)} Mbps.`;
+        statusMessage.innerHTML = `${cameras} câmeras → ${bandaTotal.toFixed(2)} Mbps (${porcentagemUso.toFixed(1)}%)`;
+        statusDetalhe.innerHTML = `Próximo do limite de ${percentualLimite}%. Folga de apenas ${(limiteUpload - bandaTotal).toFixed(1)} Mbps.`;
         statusIcon.innerHTML = '<i class="fas fa-chart-line"></i>';
       } else {
         statusCard.className = 'rounded-2xl p-6 mb-6 bg-gradient-to-r from-red-900/50 to-rose-900/50 border border-red-500';
-        statusTitle.innerHTML = '<i class="fas fa-times-circle mr-2"></i> ❌ CONFIGURAÇÃO NEGADA';
+        statusTitle.innerHTML = '<i class="fas fa-times-circle mr-2"></i> ❌ EXCEDE O LIMITE';
         statusTitle.className = 'text-2xl font-bold mb-2 text-red-400';
-        statusMessage.innerHTML = `${cameras} câmeras → ${bandaTotal.toFixed(2)} Mbps EXCEDE o limite!`;
-        statusDetalhe.innerHTML = `Ultrapassa o limite de ${percentualLimite}% (${limiteUpload.toFixed(1)} Mbps) em ${excedente.toFixed(1)} Mbps.`;
+        statusMessage.innerHTML = `${cameras} câmeras EXCEDEM o limite!`;
+        statusDetalhe.innerHTML = `Consome ${bandaTotal.toFixed(2)} Mbps, limite é ${limiteUpload.toFixed(1)} Mbps (${percentualLimite}%).`;
         statusIcon.innerHTML = '<i class="fas fa-ban"></i>';
       }
       
@@ -409,89 +450,28 @@
       recomendacoes.innerHTML = '';
       const recs = [];
       
-      recs.push(`📤 <strong>Consumo de UPLOAD atual:</strong> ${bandaTotal.toFixed(2)} Mbps (${porcentagemUso.toFixed(1)}% do upload total)`);
-      recs.push(`🎯 <strong>Limite configurado:</strong> ${percentualLimite}% do upload (${limiteUpload.toFixed(1)} Mbps)`);
+      recs.push(`📤 <strong>Bitrate padrão utilizado:</strong> ${bitrateMainAjustado} Kbps por câmera (valor base: ${bitrateMain} Kbps ajustado por ${fpsFPS}% do FPS)`);
+      recs.push(`🎯 <strong>Consumo por câmera:</strong> ${(bitrateMainAjustado/1000).toFixed(2)} Mbps (Main) + ${fluxo === 'composto' ? (bitrateSubAjustado/1000).toFixed(2) : '0'} Mbps (Sub)`);
       
       if (!estaDentro) {
-        const camerasIdeais = Math.floor(limiteUpload / (bitrateMain/1000));
+        const camerasIdeais = Math.floor(limiteUpload / (bitrateMainAjustado/1000));
         recs.push(`🔧 <strong>Solução:</strong> Reduza para ${camerasIdeais} câmeras ou aumente o limite para ${Math.ceil((bandaTotal/upload)*100)}%`);
       }
       
       if (codecAtual === 'h264' && !estaDentro) {
-        const bandaH265 = ((PADRAO.bitrateH265 * cameras) / 1000) + (fluxo === 'composto' ? ((PADRAO.bitrateH265 * 0.35 * cameras) / 1000) : 0);
+        const bitrateH265 = BITRATES[qualidade]['h265'];
+        const bitrateH265Ajustado = Math.round(bitrateH265 * fatorFPS);
+        const bandaH265 = (bitrateH265Ajustado * cameras) / 1000;
         if (bandaH265 <= limiteUpload) {
           recs.push(`💡 <strong>Trocar para H.265</strong> reduziria para ${bandaH265.toFixed(2)} Mbps (dentro do limite!)`);
         }
       }
       
-      const economiaPercentual = ((PADRAO.bitrateH264 - PADRAO.bitrateH265) / PADRAO.bitrateH264) * 100;
-      recs.push(`📊 <strong>Economia H.265:</strong> ${economiaPercentual.toFixed(0)}% menos consumo de upload`);
+      recs.push(`📊 <strong>Economia H.265:</strong> 40% menos consumo de upload comparado ao H.264`);
       
       recomendacoes.innerHTML = recs.map(r => `<li><i class="fas fa-angle-right text-blue-400 mr-2"></i>${r}</li>`).join('');
       
-      // Atualizar gráfico
-      atualizarGrafico(cameras, fluxo);
-      
-      // Atualizar tabela de capacidade
-      atualizarTabelaCapacidade();
-      
       document.getElementById('resultado').classList.remove('hidden');
-    }
-    
-    function atualizarGrafico(cameras, fluxo) {
-      const ctx = document.getElementById('graficoComparacao').getContext('2d');
-      
-      const bandaH264Main = (PADRAO.bitrateH264 * cameras) / 1000;
-      const bandaH264Sub = fluxo === 'composto' ? (PADRAO.bitrateH264 * 0.4 * cameras) / 1000 : 0;
-      const bandaH264 = bandaH264Main + bandaH264Sub;
-      
-      const bandaH265Main = (PADRAO.bitrateH265 * cameras) / 1000;
-      const bandaH265Sub = fluxo === 'composto' ? (PADRAO.bitrateH265 * 0.35 * cameras) / 1000 : 0;
-      const bandaH265 = bandaH265Main + bandaH265Sub;
-      
-      if (grafico) {
-        grafico.destroy();
-      }
-      
-      grafico = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['H.264', 'H.265'],
-          datasets: [{
-            label: 'Consumo de Upload (Mbps)',
-            data: [bandaH264, bandaH265],
-            backgroundColor: ['#ef4444', '#22c55e'],
-            borderRadius: 8,
-            borderWidth: 0
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          plugins: {
-            legend: {
-              labels: { color: '#fff' }
-            },
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  return `${context.raw.toFixed(2)} Mbps`;
-                }
-              }
-            }
-          },
-          scales: {
-            y: {
-              grid: { color: '#374151' },
-              title: { display: true, text: 'Mbps', color: '#9ca3af' },
-              ticks: { color: '#fff' }
-            },
-            x: {
-              ticks: { color: '#fff' }
-            }
-          }
-        }
-      });
     }
     
     function atualizarTabelaCapacidade() {
@@ -504,8 +484,8 @@
         tr.className = 'border-b border-gray-700';
         
         const limite30 = upload * 0.3;
-        const maxH264 = Math.floor(limite30 / (PADRAO.bitrateH264/1000));
-        const maxH265 = Math.floor(limite30 / (PADRAO.bitrateH265/1000));
+        const maxH264 = Math.floor(limite30 / (1024/1000));
+        const maxH265 = Math.floor(limite30 / (614/1000));
         
         tr.innerHTML = `
           <td class="py-2">${upload} Mbps</td>
@@ -520,68 +500,44 @@
     function exportarRelatorio() {
       const cameras = document.getElementById('cameras').value;
       const upload = document.getElementById('upload').value;
-      const fluxo = document.getElementById('fluxo').value;
-      const percentualLimite = document.getElementById('percentualLimite').value;
-      const bitrateMain = codecAtual === 'h264' ? PADRAO.bitrateH264 : PADRAO.bitrateH265;
-      const bitrateSub = codecAtual === 'h264' ? Math.round(bitrateMain * 0.4) : Math.round(bitrateMain * 0.35);
+      const qualidade = document.getElementById('qualidade').value;
+      const bitrateMain = BITRATES[qualidade][codecAtual];
+      const bandaTotal = document.getElementById('total_banda').textContent;
       
-      const bandaMain = (bitrateMain * cameras) / 1000;
-      const bandaSub = fluxo === 'composto' ? (bitrateSub * cameras) / 1000 : 0;
-      const bandaTotal = bandaMain + bandaSub;
-      const limiteUpload = upload * (percentualLimite / 100);
-      const estaDentro = bandaTotal <= limiteUpload;
-      
-      let relatorio = `RELATÓRIO TÉCNICO - SISTEMA DE CÂMERAS IP\n`;
-      relatorio += `═`.repeat(70) + `\n\n`;
-      relatorio += `📊 CONFIGURAÇÃO ANALISADA:\n`;
+      let relatorio = `RELATÓRIO TÉCNICO - CÂMERAS IP\n`;
+      relatorio += `═`.repeat(60) + `\n\n`;
+      relatorio += `📊 CONFIGURAÇÃO:\n`;
       relatorio += `• Data: ${new Date().toLocaleString('pt-BR')}\n`;
-      relatorio += `• Total de Câmeras: ${cameras}\n`;
-      relatorio += `• Upload Disponível: ${upload} Mbps\n`;
-      relatorio += `• Limite Configurado: ${percentualLimite}% do upload (${limiteUpload.toFixed(1)} Mbps)\n`;
-      relatorio += `• Codec Utilizado: ${codecAtual.toUpperCase()}\n`;
-      relatorio += `• Fluxo: ${fluxo === 'composto' ? 'Composto (Main + Sub)' : 'Simples (Apenas Main)'}\n\n`;
-      relatorio += `⚙️ PADRÃO TÉCNICO (por câmera):\n`;
-      relatorio += `• Resolução: 1080p (1920×1080)\n`;
-      relatorio += `• FPS: 10\n`;
-      relatorio += `• I-Frame: 150\n`;
-      relatorio += `• Bitrate MainStream: ${bitrateMain} Kbps (CBR)\n`;
-      relatorio += `• Bitrate SubStream: ${bitrateSub} Kbps\n\n`;
-      relatorio += `📈 RESULTADO DA ANÁLISE DE UPLOAD:\n`;
-      relatorio += `• Consumo MainStream: ${bandaMain.toFixed(2)} Mbps\n`;
-      relatorio += `• Consumo SubStream: ${bandaSub.toFixed(2)} Mbps\n`;
-      relatorio += `• Consumo Total: ${bandaTotal.toFixed(2)} Mbps (${((bandaTotal/upload)*100).toFixed(1)}% do upload)\n`;
-      relatorio += `• Status: ${estaDentro ? '✅ DENTRO DO LIMITE' : '❌ EXCEDE O LIMITE'}\n\n`;
-      relatorio += `═`.repeat(70) + `\n`;
-      relatorio += `📌 Assinatura Digital: Sistema de Câmeras IP - Controle de Upload\n`;
+      relatorio += `• Câmeras: ${cameras}\n`;
+      relatorio += `• Upload: ${upload} Mbps\n`;
+      relatorio += `• Bitrate: ${bitrateMain} Kbps/câmera (padrão 1024 Kbps para 1080p)\n`;
+      relatorio += `• Codec: ${codecAtual.toUpperCase()}\n\n`;
+      relatorio += `📈 RESULTADO:\n`;
+      relatorio += `• Consumo total: ${bandaTotal}\n`;
+      relatorio += `═`.repeat(60) + `\n`;
       
       const blob = new Blob([relatorio], { type: 'text/plain;charset=utf-8' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = `relatorio_upload_${cameras}cams_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.txt`;
+      link.download = `relatorio_cameras_${cameras}.txt`;
       link.click();
     }
     
     function copiarResultados() {
       const cameras = document.getElementById('cameras').value;
-      const upload = document.getElementById('upload').value;
-      const percentualLimite = document.getElementById('percentualLimite').value;
       const bandaTotal = document.getElementById('total_banda').textContent;
       const statusMsg = document.getElementById('status_message').textContent;
-      
-      const texto = `📹 RESULTADO CALCULADORA CÂMERAS IP\n` +
-                    `Câmeras: ${cameras}\n` +
-                    `Upload: ${upload} Mbps\n` +
-                    `Limite: ${percentualLimite}%\n` +
-                    `Consumo: ${bandaTotal}\n` +
-                    `${statusMsg}`;
-      
+      const texto = `📹 RESULTADO\nCâmeras: ${cameras}\nConsumo: ${bandaTotal}\n${statusMsg}`;
       navigator.clipboard.writeText(texto);
-      alert('✅ Resultados copiados para a área de transferência!');
+      alert('✅ Copiado!');
     }
     
     // Eventos
     document.getElementById('cameras').addEventListener('input', calcular);
     document.getElementById('upload').addEventListener('change', calcular);
+    document.getElementById('qualidade').addEventListener('change', calcular);
+    document.getElementById('fps').addEventListener('change', calcular);
+    document.getElementById('iframe').addEventListener('change', calcular);
     document.getElementById('fluxo').addEventListener('change', calcular);
     document.getElementById('percentualLimite').addEventListener('input', calcular);
     
