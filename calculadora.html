@@ -3,37 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora Câmeras IP - Versão Profissional</title>
+  <title>Calculadora IP - Padrão Empresarial</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body { font-family: 'Segoe UI', system-ui, sans-serif; }
-    .recommendation-badge {
-      transition: all 0.3s ease;
+    .padrao-empresa {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
     }
   </style>
 </head>
 <body class="bg-gray-950 text-white min-h-screen">
-  <div class="max-w-4xl mx-auto p-6">
-    <h1 class="text-4xl font-bold text-center mb-2 text-blue-500">
-      📷 Calculadora de Câmeras IP
-    </h1>
-    <p class="text-center text-gray-400 mb-8">Configuração segura para não comprometer a rede</p>
+  <div class="max-w-5xl mx-auto p-6">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold mb-2 text-blue-500">
+        📷 Calculadora de Câmeras IP
+      </h1>
+      <div class="inline-block bg-blue-900/50 rounded-full px-4 py-1 text-sm">
+        <i class="fas fa-building mr-2"></i>Padrão Empresarial - H.264 | 1080p | 10 fps | 1181 Kbps
+      </div>
+    </div>
 
     <div class="bg-gray-900 rounded-2xl p-8 shadow-xl">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Inputs -->
+        <!-- Total de Câmeras -->
         <div>
           <label class="block text-sm font-medium mb-2">
-            <i class="fas fa-video mr-2"></i>Total de Câmeras
+            <i class="fas fa-video mr-2 text-blue-400"></i>Total de Câmeras
           </label>
-          <input id="cameras" type="number" value="14" min="1" max="250"
+          <input id="cameras" type="number" value="14" min="1" max="200" 
                  class="w-full bg-gray-800 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
 
+        <!-- Velocidade da Rede -->
         <div>
           <label class="block text-sm font-medium mb-2">
-            <i class="fas fa-tachometer-alt mr-2"></i>Velocidade da Rede (Mbps)
+            <i class="fas fa-tachometer-alt mr-2 text-blue-400"></i>Velocidade da Rede (Mbps)
           </label>
           <select id="rede" class="w-full bg-gray-800 rounded-lg px-4 py-3">
             <option value="100">100 Mbps (Básica)</option>
@@ -44,34 +50,54 @@
           </select>
         </div>
 
+        <!-- Tipo de Fluxo -->
         <div>
           <label class="block text-sm font-medium mb-2">
-            <i class="fas fa-chart-line mr-2"></i>Resolução Desejada
+            <i class="fas fa-stream mr-2 text-blue-400"></i>Tipo de Fluxo
           </label>
-          <select id="resolucao" class="w-full bg-gray-800 rounded-lg px-4 py-3">
-            <option value="4k">4K (Ultra HD)</option>
-            <option value="1080" selected>1080p (Full HD)</option>
-            <option value="720">720p (HD)</option>
+          <select id="fluxo" class="w-full bg-gray-800 rounded-lg px-4 py-3">
+            <option value="composto" selected>Fluxo Composto (Main + Sub)</option>
+            <option value="simples">Fluxo Simples (Apenas Main)</option>
           </select>
         </div>
 
+        <!-- Codec -->
         <div>
           <label class="block text-sm font-medium mb-2">
-            <i class="fas fa-microchip mr-2"></i>Codec
+            <i class="fas fa-microchip mr-2 text-blue-400"></i>Codec de Vídeo
           </label>
           <select id="codec" class="w-full bg-gray-800 rounded-lg px-4 py-3">
-            <option value="h265" selected>H.265 (Recomendado - 40% menos banda)</option>
-            <option value="h264">H.264 (Compatível)</option>
+            <option value="h264" selected>H.264 (Padrão Empresa)</option>
+            <option value="h265">H.265 (Economia de Banda)</option>
           </select>
         </div>
       </div>
 
-      <div class="mt-6 bg-blue-900/30 rounded-xl p-4 border border-blue-500/30">
-        <div class="flex items-start gap-3">
-          <i class="fas fa-shield-alt text-blue-400 text-xl mt-1"></i>
-          <div class="text-sm">
-            <p class="font-semibold text-blue-300">🔒 Modo de Proteção de Banda Ativado</p>
-            <p class="text-gray-300">O sistema usará no máximo <strong class="text-yellow-300">75% da sua banda disponível</strong> para garantir estabilidade na rede.</p>
+      <!-- Parâmetros Fixos do Padrão Empresarial -->
+      <div class="mt-6 bg-blue-950/30 rounded-xl p-5 border border-blue-500/30">
+        <h3 class="text-blue-300 font-semibold mb-3">
+          <i class="fas fa-cog mr-2"></i>Configuração Padrão da Empresa
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 text-sm">
+          <div class="bg-gray-800/50 rounded-lg p-2 text-center">
+            <span class="text-gray-400">Resolução</span>
+            <p class="font-bold text-blue-300">1080p</p>
+          </div>
+          <div class="bg-gray-800/50 rounded-lg p-2 text-center">
+            <span class="text-gray-400">Codec</span>
+            <p class="font-bold text-blue-300">H.264</p>
+          </div>
+          <div class="bg-gray-800/50 rounded-lg p-2 text-center">
+            <span class="text-gray-400">FPS</span>
+            <p class="font-bold text-blue-300">10 fps</p>
+          </div>
+          <div class="bg-gray-800/50 rounded-lg p-2 text-center">
+            <span class="text-gray-400">I-Frame</span>
+            <p class="font-bold text-blue-300">150</p>
+          </div>
+          <div class="bg-gray-800/50 rounded-lg p-2 text-center">
+            <span class="text-gray-400">Bitrate</span>
+            <p class="font-bold text-blue-300">1181 Kbps</p>
           </div>
         </div>
       </div>
@@ -79,278 +105,328 @@
 
     <!-- Resultados -->
     <div id="resultado" class="mt-8 hidden">
-      <h2 class="text-2xl font-bold mb-6 text-center">📊 Análise e Recomendações</h2>
-      
-      <!-- Status Principal -->
-      <div id="status_card" class="rounded-2xl p-6 mb-6 bg-gradient-to-r relative overflow-hidden">
-        <div id="status_icon" class="absolute top-4 right-4 text-6xl opacity-20"></div>
-        <h3 id="status_title" class="text-2xl font-bold mb-2"></h3>
-        <p id="status_message" class="text-lg"></p>
+      <!-- Card Principal -->
+      <div id="status_card" class="rounded-2xl p-6 mb-6 bg-gradient-to-r relative">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h2 id="status_title" class="text-2xl font-bold mb-2"></h2>
+            <p id="status_message" class="text-lg"></p>
+          </div>
+          <div id="status_badge" class="text-6xl opacity-30"></div>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Configuração Recomendada -->
+        <!-- Configuração MainStream -->
         <div class="bg-gray-900 rounded-2xl p-6">
           <h3 class="text-xl font-semibold text-green-400 mb-4">
-            <i class="fas fa-check-circle mr-2"></i>Configuração Recomendada
+            <i class="fas fa-desktop mr-2"></i>MainStream (Gravação)
+            <span class="text-xs text-gray-500 ml-2">Padrão Empresa</span>
           </h3>
           <table class="w-full text-sm">
             <tr class="border-b border-gray-700">
+              <td class="py-2 font-semibold">Tipo de fluxo</td>
+              <td id="main_fluxo" class="text-right text-green-300">-</td>
+            </tr>
+            <tr class="border-b border-gray-700">
+              <td class="py-2 font-semibold">Codificação</td>
+              <td id="main_codec" class="text-right text-green-300">-</td>
+            </tr>
+            <tr class="border-b border-gray-700">
               <td class="py-2 font-semibold">Resolução</td>
-              <td id="main_res" class="text-right text-green-300">-\Cell</td>
+              <td id="main_res" class="text-right text-green-300">-</td>
             </tr>
             <tr class="border-b border-gray-700">
-              <td class="py-2 font-semibold">Codec</td>
-              <td id="main_codec" class="text-right text-green-300">-\Cell</td>
+              <td class="py-2 font-semibold">Intervalo de Quadros I</td>
+              <td id="main_iframe" class="text-right text-green-300">-</td>
             </tr>
             <tr class="border-b border-gray-700">
-              <td class="py-2 font-semibold">FPS (Quadros/s)</td>
-              <td id="main_fps" class="text-right text-green-300">-\Cell</td>
+              <td class="py-2 font-semibold">Taxa de quadros (FPS)</td>
+              <td id="main_fps" class="text-right text-green-300">-</td>
             </tr>
             <tr class="border-b border-gray-700">
-              <td class="py-2 font-semibold">I-Frame (GOP)</td>
-              <td id="main_iframe" class="text-right text-green-300">-\Cell</td>
+              <td class="py-2 font-semibold">Controle de taxa</td>
+              <td class="text-right text-green-300">Taxa de bits constante (CBR)</td>
             </tr>
             <tr class="border-b border-gray-700">
-              <td class="py-2 font-semibold">Bitrate por câmera</td>
-              <td id="main_bitrate" class="text-right text-green-300">-\Cell</td>
+              <td class="py-2 font-semibold">Taxa de bits</td>
+              <td id="main_bitrate" class="text-right text-green-300 font-bold">-</td>
             </tr>
-            <tr>
-              <td class="py-2 font-bold">Banda total estimada</td>
-              <td id="total_band" class="text-right font-bold text-yellow-400 text-lg">-\Cell</td>
+            <tr class="border-b border-gray-700">
+              <td class="py-2 font-bold text-yellow-400">Banda total MainStream</td>
+              <td id="total_band_main" class="text-right font-bold text-yellow-400 text-lg">-</td>
             </tr>
           </table>
         </div>
 
-        <!-- Informações da Rede -->
+        <!-- Configuração SubStream e Rede -->
         <div class="bg-gray-900 rounded-2xl p-6">
           <h3 class="text-xl font-semibold text-blue-400 mb-4">
-            <i class="fas fa-network-wired mr-2"></i>Capacidade da Rede
+            <i class="fas fa-mobile-alt mr-2"></i>SubStream (Visualização Remota)
           </h3>
-          <table class="w-full text-sm">
+          <table class="w-full text-sm mb-6">
             <tr class="border-b border-gray-700">
-              <td class="py-2 font-semibold">Banda total disponível</td>
-              <td id="banda_total" class="text-right font-medium">-\Cell</td>
+              <td class="py-2 font-semibold">Resolução</td>
+              <td id="sub_res" class="text-right text-blue-300">720p / D1</td>
             </tr>
             <tr class="border-b border-gray-700">
-              <td class="py-2 font-semibold">Limite seguro (75%)</td>
-              <td id="limite_seguro" class="text-right text-green-400 font-medium">-\Cell</td>
+              <td class="py-2 font-semibold">Taxa de quadros</td>
+              <td id="sub_fps" class="text-right text-blue-300">8 fps</td>
             </tr>
             <tr class="border-b border-gray-700">
-              <td class="py-2 font-semibold">Uso atual</td>
-              <td id="uso_atual" class="text-right font-medium">-\Cell</td>
+              <td class="py-2 font-semibold">Taxa de bits</td>
+              <td id="sub_bitrate" class="text-right text-blue-300">-</td>
             </tr>
             <tr>
-              <td class="py-2 font-semibold">Banda livre restante</td>
-              <td id="banda_livre" class="text-right text-blue-400 font-medium">-\Cell</td>
+              <td class="py-2 font-bold text-yellow-400">Banda total SubStream</td>
+              <td id="total_band_sub" class="text-right font-bold text-yellow-400">-</td>
             </tr>
-           </table>
-          
-          <!-- Barra de utilização -->
-          <div class="mt-4 pt-4 border-t border-gray-700">
-            <div class="flex justify-between text-xs mb-1">
-              <span>0%</span>
-              <span>25%</span>
-              <span>50%</span>
-              <span>75%</span>
-              <span>100%</span>
+          </table>
+
+          <div class="border-t border-gray-700 pt-4">
+            <h3 class="text-lg font-semibold text-purple-400 mb-3">
+              <i class="fas fa-network-wired mr-2"></i>Análise de Rede
+            </h3>
+            <table class="w-full text-sm">
+              <tr class="border-b border-gray-700">
+                <td class="py-2">Banda total disponível</td>
+                <td id="banda_total" class="text-right font-medium">-</td>
+              </tr>
+              <tr class="border-b border-gray-700">
+                <td class="py-2">Limite recomendado (70%)</td>
+                <td id="limite_recomendado" class="text-right text-green-400">-</td>
+              </tr>
+              <tr class="border-b border-gray-700">
+                <td class="py-2">Uso total planejado</td>
+                <td id="uso_total" class="text-right font-bold">-</td>
+              </tr>
+              <tr class="border-b border-gray-700">
+                <td class="py-2">Banda livre restante</td>
+                <td id="banda_livre" class="text-right text-blue-400">-</td>
+              </tr>
+            </table>
+            
+            <!-- Barra de Utilização -->
+            <div class="mt-4 pt-3">
+              <div class="flex justify-between text-xs mb-1 text-gray-400">
+                <span>0%</span>
+                <span>30%</span>
+                <span>50%</span>
+                <span>70%</span>
+                <span>100%</span>
+              </div>
+              <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                <div id="barra_uso" class="h-full transition-all duration-500 rounded-full" style="width: 0%"></div>
+              </div>
+              <p class="text-xs text-gray-400 mt-2">
+                <i class="fas fa-chart-line mr-1"></i>Uso: <span id="porcentagem_uso" class="text-yellow-300">0</span>% da rede
+              </p>
             </div>
-            <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
-              <div id="barra_uso" class="h-full transition-all duration-500 rounded-full" style="width: 0%"></div>
-            </div>
-            <p class="text-xs text-gray-400 mt-2">
-              <i class="fas fa-info-circle mr-1"></i>O limite de 75% garante estabilidade para outros usos da rede
-            </p>
           </div>
         </div>
       </div>
 
-      <!-- SubStream e Recomendações Adicionais -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <div class="bg-gray-800 rounded-xl p-5">
-          <h4 class="font-semibold text-blue-400 mb-2">
-            <i class="fas fa-mobile-alt mr-2"></i>SubStream (Visualização remota)
-          </h4>
-          <p>Resolução: <span id="sub_res" class="text-yellow-300">720p/D1</span></p>
-          <p>FPS: <span id="sub_fps" class="text-yellow-300">8 fps</span></p>
-          <p>Bitrate: <span id="sub_bitrate" class="text-yellow-300">-</span> por câmera</p>
-        </div>
+      <!-- Recomendações -->
+      <div class="mt-6 bg-gray-800 rounded-xl p-5">
+        <h4 class="font-semibold text-orange-400 mb-3">
+          <i class="fas fa-lightbulb mr-2"></i>Recomendações Técnicas
+        </h4>
+        <ul id="recomendacoes" class="space-y-2 text-sm">
+          <li><i class="fas fa-spinner fa-spin mr-2"></i>Calculando...</li>
+        </ul>
+      </div>
 
-        <div class="bg-gray-800 rounded-xl p-5">
-          <h4 class="font-semibold text-purple-400 mb-2">
-            <i class="fas fa-lightbulb mr-2"></i>Sugestões de Melhoria
-          </h4>
-          <ul id="sugestoes" class="text-sm space-y-2">
-            <li><i class="fas fa-sync-alt"></i> Calculando...</li>
-          </ul>
-        </div>
+      <!-- Botão de Exportar -->
+      <div class="mt-6 flex justify-center gap-4">
+        <button onclick="exportarRelatorio()" 
+                class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-semibold transition">
+          <i class="fas fa-download mr-2"></i>Exportar Relatório
+        </button>
+        <button onclick="window.print()" 
+                class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg font-semibold transition">
+          <i class="fas fa-print mr-2"></i>Imprimir
+        </button>
       </div>
     </div>
   </div>
 
   <script>
+    // Parâmetros FIXOS baseados no padrão da empresa
+    const PADRAO_EMPRESA = {
+      resolucao: '1080p',
+      codec: 'H.264',
+      fps: 10,
+      iframe: 150,
+      bitratePorCamera: 1181, // Kbps
+      controleTaxa: 'CBR'
+    };
+
     function calcular() {
       const cameras = parseInt(document.getElementById('cameras').value) || 1;
       const rede = parseInt(document.getElementById('rede').value);
-      const resolucao = document.getElementById('resolucao').value;
       const codec = document.getElementById('codec').value;
+      const fluxo = document.getElementById('fluxo').value;
       
-      // Limite seguro: usar no máximo 75% da banda
-      const limiteSeguro = rede * 0.75;
+      // Calcular bitrate baseado no codec escolhido
+      let bitrateMain = PADRAO_EMPRESA.bitratePorCamera;
       
-      // Bitrates máximos possíveis por resolução (Kbps)
-      const bitratesMax = {
-        '720': { h264: 2500, h265: 1500 },
-        '1080': { h264: 5000, h265: 3000 },
-        '4k': { h264: 12000, h265: 8000 }
-      };
+      // Ajuste para H.265 (economia de ~40%)
+      if (codec === 'h265') {
+        bitrateMain = Math.round(bitrateMain * 0.6); // 708 Kbps aproximadamente
+      }
       
-      const bitrateMaxCamera = bitratesMax[resolucao][codec === 'h265' ? 'h265' : 'h264'];
+      // SubStream bitrate (aproximadamente 35-40% do Main)
+      const bitrateSub = codec === 'h265' ? Math.round(bitrateMain * 0.35) : Math.round(bitrateMain * 0.4);
       
-      // Calcular bitrate máximo seguro por câmera
-      let bitratePorCamera = Math.min(bitrateMaxCamera, (limiteSeguro * 1000) / cameras);
+      // Calcular bandas totais
+      let bandaMain = (bitrateMain * cameras) / 1000;
+      let bandaSub = fluxo === 'composto' ? (bitrateSub * cameras) / 1000 : 0;
+      let bandaTotal = bandaMain + bandaSub;
       
-      // Ajustar FPS baseado no bitrate disponível
-      let fpsRecomendado;
-      let resolucaoFinal = resolucao;
+      // Limite recomendado (70% da rede para garantir estabilidade)
+      const limiteRecomendado = rede * 0.7;
+      const porcentagemUso = (bandaTotal / rede) * 100;
+      const bandaLivre = rede - bandaTotal;
       
-      if (bitratePorCamera >= 8000) {
-        fpsRecomendado = 30;
-      } else if (bitratePorCamera >= 4000) {
-        fpsRecomendado = 20;
-      } else if (bitratePorCamera >= 2000) {
-        fpsRecomendado = 15;
-      } else if (bitratePorCamera >= 1200) {
-        fpsRecomendado = 10;
-      } else {
-        fpsRecomendado = 8;
-        // Se mesmo assim não conseguir, reduz resolução
-        if (bitratePorCamera < 800) {
-          if (resolucao === '4k') {
-            resolucaoFinal = '1080';
-            bitratePorCamera = Math.min(bitratesMax['1080'][codec === 'h265' ? 'h265' : 'h264'], (limiteSeguro * 1000) / cameras);
-          } else if (resolucao === '1080') {
-            resolucaoFinal = '720';
-            bitratePorCamera = Math.min(bitratesMax['720'][codec === 'h265' ? 'h265' : 'h264'], (limiteSeguro * 1000) / cameras);
-          }
+      // Verificar se precisa ajustar
+      let ajustado = false;
+      let ajusteMessage = '';
+      
+      if (bandaTotal > limiteRecomendado) {
+        ajustado = true;
+        const excesso = (bandaTotal - limiteRecomendado).toFixed(1);
+        ajusteMessage = `⚠️ A configuração excede o limite recomendado em ${excesso} Mbps. `;
+        
+        // Sugerir redução no bitrate se necessário
+        if (bandaTotal > rede * 0.85) {
+          ajusteMessage += `Considere usar H.265 (economiza 40% de banda) ou reduzir FPS para 8.`;
         }
       }
       
-      // Calcular I-Frame (GOP) recomendado: FPS * 2 a 4
-      const iframeRecomendado = Math.round(fpsRecomendado * 2.5);
-      
-      // Calcular total de banda usada
-      const totalMbps = (bitratePorCamera * cameras) / 1000;
-      const porcentagemUso = (totalMbps / rede) * 100;
-      const bandaLivre = rede - totalMbps;
-      
-      // Obter texto das resoluções
-      const resolucaoTexto = {
-        '720': '720p (HD)',
-        '1080': '1080p (Full HD)',
-        '4k': '4K (Ultra HD)'
-      };
-      
       // Atualizar interface
-      document.getElementById('main_res').textContent = resolucaoTexto[resolucaoFinal];
+      document.getElementById('main_fluxo').textContent = fluxo === 'composto' ? 'Fluxo Composto (Main + Sub)' : 'Fluxo Simples';
       document.getElementById('main_codec').textContent = codec.toUpperCase();
-      document.getElementById('main_fps').textContent = `${fpsRecomendado} fps`;
-      document.getElementById('main_iframe').textContent = iframeRecomendado;
-      document.getElementById('main_bitrate').textContent = `${Math.round(bitratePorCamera)} Kbps`;
-      document.getElementById('total_band').textContent = `${totalMbps.toFixed(1)} Mbps`;
-      
-      // Informações da rede
-      document.getElementById('banda_total').textContent = `${rede} Mbps`;
-      document.getElementById('limite_seguro').textContent = `${limiteSeguro.toFixed(1)} Mbps (75%)`;
-      document.getElementById('uso_atual').textContent = `${totalMbps.toFixed(1)} Mbps (${porcentagemUso.toFixed(1)}%)`;
-      document.getElementById('banda_livre').textContent = `${bandaLivre.toFixed(1)} Mbps`;
+      document.getElementById('main_res').textContent = PADRAO_EMPRESA.resolucao;
+      document.getElementById('main_fps').textContent = `${PADRAO_EMPRESA.fps} fps`;
+      document.getElementById('main_iframe').textContent = PADRAO_EMPRESA.iframe;
+      document.getElementById('main_bitrate').innerHTML = `${bitrateMain} Kbps <span class="text-gray-400 text-xs">(256–12288 Kbps)</span>`;
+      document.getElementById('total_band_main').textContent = `${bandaMain.toFixed(2)} Mbps`;
       
       // SubStream
-      const subBitrate = codec === 'h265' ? 350 : 450;
-      document.getElementById('sub_bitrate').textContent = `${subBitrate} Kbps`;
-      document.getElementById('sub_res').textContent = resolucaoFinal === '4k' ? '1080p' : (resolucaoFinal === '1080' ? '720p' : 'D1');
-      document.getElementById('sub_fps').textContent = `${Math.min(8, fpsRecomendado)} fps`;
+      document.getElementById('sub_bitrate').innerHTML = `${bitrateSub} Kbps <span class="text-gray-400 text-xs">(Padrão)</span>`;
+      document.getElementById('total_band_sub').textContent = fluxo === 'composto' ? `${bandaSub.toFixed(2)} Mbps` : 'Desativado';
       
-      // Barra de uso
-      const usoPercentual = Math.min(100, (totalMbps / rede) * 100);
+      // Rede
+      document.getElementById('banda_total').textContent = `${rede} Mbps`;
+      document.getElementById('limite_recomendado').innerHTML = `${limiteRecomendado.toFixed(1)} Mbps <span class="text-gray-400 text-xs">(70%)</span>`;
+      document.getElementById('uso_total').innerHTML = `<span class="${bandaTotal > limiteRecomendado ? 'text-red-400' : 'text-green-400'}">${bandaTotal.toFixed(2)} Mbps</span>`;
+      document.getElementById('banda_livre').innerHTML = `${bandaLivre.toFixed(2)} Mbps <span class="text-gray-400 text-xs">para outros usos</span>`;
+      
+      // Porcentagem
+      const porcentagem = ((bandaTotal / rede) * 100).toFixed(1);
+      document.getElementById('porcentagem_uso').textContent = porcentagem;
+      
+      // Barra
       const barra = document.getElementById('barra_uso');
+      const usoPercentual = Math.min(100, (bandaTotal / rede) * 100);
       barra.style.width = `${usoPercentual}%`;
       
-      // Cor da barra baseada no uso
       if (usoPercentual <= 50) {
-        barra.style.backgroundColor = '#22c55e'; // Verde
-      } else if (usoPercentual <= 75) {
-        barra.style.backgroundColor = '#eab308'; // Amarelo
+        barra.style.backgroundColor = '#22c55e';
+      } else if (usoPercentual <= 70) {
+        barra.style.backgroundColor = '#eab308';
       } else {
-        barra.style.backgroundColor = '#ef4444'; // Vermelho
+        barra.style.backgroundColor = '#ef4444';
       }
       
-      // Status card e recomendações
+      // Status Card
       const statusCard = document.getElementById('status_card');
       const statusTitle = document.getElementById('status_title');
       const statusMessage = document.getElementById('status_message');
-      const statusIcon = document.getElementById('status_icon');
+      const statusBadge = document.getElementById('status_badge');
       
-      if (totalMbps <= limiteSeguro) {
+      if (bandaTotal <= limiteRecomendado * 0.9) {
         statusCard.className = 'rounded-2xl p-6 mb-6 bg-gradient-to-r from-green-900/50 to-emerald-900/50 border border-green-500';
-        statusTitle.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Configuração Segura!';
+        statusTitle.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Configuração Ideal!';
         statusTitle.className = 'text-2xl font-bold mb-2 text-green-400';
-        statusMessage.innerHTML = `✅ Excelente! Sua rede aguenta ${cameras} câmeras em ${resolucaoTexto[resolucaoFinal]} sem comprometer a banda. Uso de ${porcentagemUso.toFixed(1)}% da rede.`;
-        statusIcon.innerHTML = '<i class="fas fa-shield-alt"></i>';
-      } else if (totalMbps <= rede * 0.9) {
-        statusCard.className = 'rounded-2xl p-6 mb-6 bg-gradient-to-r from-yellow-900/50 to-orange-900/50 border border-yellow-500';
-        statusTitle.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> Atenção!';
+        statusMessage.innerHTML = `✅ A rede suporta ${cameras} câmeras no padrão empresa sem comprometer a estabilidade. Uso de ${porcentagem}% da banda.`;
+        statusBadge.innerHTML = '<i class="fas fa-shield-alt"></i>';
+      } else if (bandaTotal <= limiteRecomendado) {
+        statusCard.className = 'rounded-2xl p-6 mb-6 bg-gradient-to-r from-yellow-900/50 to-amber-900/50 border border-yellow-500';
+        statusTitle.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> Configuração Aceitável';
         statusTitle.className = 'text-2xl font-bold mb-2 text-yellow-400';
-        statusMessage.innerHTML = `⚠️ Configuração no limite! Recomendamos reduzir resolução ou usar H.265 para melhor estabilidade. Uso de ${porcentagemUso.toFixed(1)}% da rede.`;
-        statusIcon.innerHTML = '<i class="fas fa-chart-line"></i>';
+        statusMessage.innerHTML = `⚠️ ${cameras} câmeras funcionam, mas a rede fica no limite. Uso de ${porcentagem}% da banda. Evite outros tráfegos pesados.`;
+        statusBadge.innerHTML = '<i class="fas fa-chart-line"></i>';
       } else {
         statusCard.className = 'rounded-2xl p-6 mb-6 bg-gradient-to-r from-red-900/50 to-rose-900/50 border border-red-500';
-        statusTitle.innerHTML = '<i class="fas fa-times-circle mr-2"></i> Configuração INVÁLIDA!';
+        statusTitle.innerHTML = '<i class="fas fa-times-circle mr-2"></i> Configuração Compromete a Rede!';
         statusTitle.className = 'text-2xl font-bold mb-2 text-red-400';
-        statusMessage.innerHTML = `❌ Esta configuração comprometeria sua rede! Uso de ${porcentagemUso.toFixed(1)}% da banda. Por favor, ajuste para as recomendações abaixo.`;
-        statusIcon.innerHTML = '<i class="fas fa-ban"></i>';
+        statusMessage.innerHTML = `❌ ${cameras} câmeras com esse padrão usariam ${bandaTotal.toFixed(1)} Mbps (${porcentagem}% da rede). A rede ficará instável!`;
+        statusBadge.innerHTML = '<i class="fas fa-ban"></i>';
       }
       
-      // Sugestões personalizadas
-      const sugestoesList = document.getElementById('sugestoes');
-      sugestoesList.innerHTML = '';
+      // Recomendações
+      const recomendacoes = document.getElementById('recomendacoes');
+      recomendacoes.innerHTML = '';
       
-      const sugestoes = [];
+      const recs = [];
       
-      if (codec !== 'h265') {
-        const economia = (bitratePorCamera * 0.4 * cameras) / 1000;
-        sugestoes.push(`🔄 Trocar para <strong>H.265</strong> economizaria ~${economia.toFixed(1)} Mbps de banda`);
+      recs.push(`📹 <strong>MainStream:</strong> ${bitrateMain} Kbps por câmera | Total: ${bandaMain.toFixed(2)} Mbps`);
+      
+      if (fluxo === 'composto') {
+        recs.push(`📱 <strong>SubStream:</strong> ${bitrateSub} Kbps por câmera | Total: ${bandaSub.toFixed(2)} Mbps`);
       }
       
-      if (resolucao === '4k' && cameras > 8) {
-        sugestoes.push(`📉 Reduzir resolução para <strong>1080p</strong> reduziria o consumo em ~40%`);
+      if (codec !== 'h264') {
+        recs.push(`💾 <strong>H.265 ativado:</strong> Economia de ${Math.round((PADRAO_EMPRESA.bitratePorCamera * cameras / 1000) - bandaMain)} Mbps em relação ao H.264`);
       }
       
-      if (fpsRecomendado < 15) {
-        sugestoes.push(`⚡ Reduzir FPS para 10-12 não compromete a gravação e economiza banda`);
-      }
-      
-      if (bandaLivre < 20) {
-        sugestoes.push(`🌐 Considere aumentar a largura de banda ou usar um switch dedicado para as câmeras`);
-      }
-      
-      if (sugestoes.length === 0) {
-        sugestoes.push(`💪 Configuração ideal! Aproveite seu sistema de ${resolucaoTexto[resolucaoFinal]}`);
-        sugestoes.push(`📡 ${bandaLivre.toFixed(1)} Mbps livres para outras atividades na rede`);
+      if (bandaTotal > limiteRecomendado) {
+        recs.push(`🔧 <strong>Sugestão:</strong> Use H.265 ou reduza o FPS para 8 para manter a estabilidade da rede.`);
       } else {
-        sugestoes.push(`🎯 Banda atual: ${totalMbps.toFixed(1)} Mbps / ${limiteSeguro.toFixed(1)} Mbps disponíveis`);
+        const margem = (limiteRecomendado - bandaTotal).toFixed(1);
+        recs.push(`📊 <strong>Margem de segurança:</strong> ${margem} Mbps livres para outros serviços da rede.`);
       }
       
-      sugestoes.forEach(sug => {
-        const li = document.createElement('li');
-        li.innerHTML = sug;
-        sugestoesList.appendChild(li);
-      });
+      if (cameras > 25 && rede < 500) {
+        recs.push(`🌐 <strong>Rede recomendada:</strong> Para ${cameras} câmeras, utilize pelo menos 500 Mbps ou segmente em switches dedicados.`);
+      }
+      
+      recomendacoes.innerHTML = recs.map(r => `<li><i class="fas fa-angle-right text-blue-400 mr-2"></i>${r}</li>`).join('');
       
       document.getElementById('resultado').classList.remove('hidden');
     }
     
-    // Atualizar ao mudar valores
+    function exportarRelatorio() {
+      const cameras = document.getElementById('cameras').value;
+      const rede = document.getElementById('rede').value;
+      const codec = document.getElementById('codec').value;
+      const fluxo = document.getElementById('fluxo').value;
+      
+      let relatorio = `RELATÓRIO TÉCNICO - CÂMERAS IP\n`;
+      relatorio += `═`.repeat(50) + `\n\n`;
+      relatorio += `📊 CONFIGURAÇÃO ANALISADA:\n`;
+      relatorio += `• Total de Câmeras: ${cameras}\n`;
+      relatorio += `• Rede Disponível: ${rede} Mbps\n`;
+      relatorio += `• Codec: ${codec.toUpperCase()}\n`;
+      relatorio += `• Fluxo: ${fluxo === 'composto' ? 'Composto (Main + Sub)' : 'Simples'}\n\n`;
+      relatorio += `⚙️ PADRÃO DA EMPRESA:\n`;
+      relatorio += `• Resolução: 1080p\n`;
+      relatorio += `• FPS: 10\n`;
+      relatorio += `• I-Frame: 150\n`;
+      relatorio += `• Bitrate: 1181 Kbps (H.264) / ${codec === 'h265' ? '708' : '1181'} Kbps (configurado)\n\n`;
+      relatorio += `📈 RESULTADO:\n`;
+      relatorio += `${document.getElementById('status_message').innerText.replace(/<[^>]*>/g, '')}\n`;
+      
+      // Baixar arquivo
+      const blob = new Blob([relatorio], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `relatorio_cameras_${cameras}_${new Date().toISOString().slice(0,19)}.txt`;
+      link.click();
+    }
+    
+    // Eventos
     document.querySelectorAll('input, select').forEach(el => {
       el.addEventListener('input', calcular);
       el.addEventListener('change', calcular);
