@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora IP - Relatório Técnico2</title>
+  <title>Calculadora IP - Relatório Técnico</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -180,32 +180,59 @@
       document.getElementById('relatorio-impressao').innerHTML = htmlRelatorio.replace(/no-print/g, '');
     }
 
-    function imprimirRelatorio() {
-      const conteudo = document.getElementById('relatorio-impressao').innerHTML;
-      const win = window.open('', '_blank');
-      win.document.write(`
-        <!DOCTYPE html>
-        <html><head>
-          <meta charset="UTF-8">
-          <title>Relatório Técnico</title>
-          <script src="https://cdn.tailwindcss.com"><\/script>
-          <style>body { padding: 30px; font-family: system-ui; }</style>
-        </head><body>${conteudo}</body></html>
-      `);
-      win.document.close();
-      setTimeout(() => win.print(), 600);
-    }
+function imprimirRelatorio() {
+  const conteudo = document.getElementById('relatorio-impressao').innerHTML;
+  const win = window.open('', '_blank');
+  
+  // Note o <\/script> abaixo para evitar erro de interpretação do navegador
+  win.document.write(`
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+      <meta charset="UTF-8">
+      <title>Relatório Técnico</title>
+      <script src="https://cdn.tailwindcss.com"><\/script>
+      <style>
+        body { padding: 30px; font-family: system-ui; }
+        @media print { .no-print { display: none; } }
+      </style>
+    </head>
+    <body>
+      ${conteudo}
+    </body>
+    </html>
+  `);
+  
+  win.document.close();
+  // Espera um pouco para o Tailwind carregar os estilos antes de imprimir
+  setTimeout(() => {
+    win.print();
+  }, 800);
+}
 
-    function baixarRelatorio() {
-      const conteudo = document.getElementById('relatorio-impressao').innerHTML;
-      const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Relatório Técnico</title><script src="https://cdn.tailwindcss.com"></script><style>body{padding:30px;}</style></head><body>${conteudo}</body></html>`;
-      
-      const blob = new Blob([html], { type: 'text/html' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `relatorio_cameras_${new Date().toISOString().slice(0,10)}.html`;
-      link.click();
-    }
+function baixarRelatorio() {
+  const conteudo = document.getElementById('relatorio-impressao').innerHTML;
+  
+  // Aplicando a mesma lógica de escape no template literal
+  const htmlCompleto = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório Técnico</title>
+  <script src="https://cdn.tailwindcss.com"><\/script>
+  <style>body{padding:30px;}</style>
+</head>
+<body>
+  ${conteudo}
+</body>
+</html>`;
+
+  const blob = new Blob([htmlCompleto], { type: 'text/html' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `relatorio_cameras_${new Date().toISOString().slice(0, 10)}.html`;
+  link.click();
+}
 
     // Atualiza o slider em tempo real
     document.getElementById('limiteConsumo').addEventListener('input', function() {
